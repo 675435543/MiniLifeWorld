@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/scenes/scene_base.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/items/prop_draw.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/items/item.gd" id="3"]
 
 [node name="Hospital" type="Control"]
 layout_mode = 3
@@ -40,30 +41,32 @@ color = Color(0.82, 0.89, 0.96, 1)
 
 [node name="Decor" type="Node2D" parent="."]
 
-[node name="Reception" type="Node2D" parent="Decor"]
-position = Vector2(500, 830)
-script = ExtResource("2")
-prop_type = "desk"
-
-[node name="Chairs" type="Node2D" parent="Decor"]
-position = Vector2(830, 870)
-script = ExtResource("2")
-prop_type = "chairs"
-
-[node name="HospitalBed" type="Node2D" parent="Decor"]
-position = Vector2(1250, 850)
-script = ExtResource("2")
-prop_type = "hospital_bed"
-
-[node name="Cabinet" type="Node2D" parent="Decor"]
-position = Vector2(1650, 810)
-script = ExtResource("2")
-prop_type = "cabinet"
-
 [node name="Plant" type="Node2D" parent="Decor"]
-position = Vector2(1850, 930)
+position = Vector2(1830, 930)
 script = ExtResource("2")
 prop_type = "plant"
+
+[node name="Items" type="Node2D" parent="."]
+
+[node name="Reception" type="Node2D" parent="Items"]
+position = Vector2(500, 830)
+script = ExtResource("3")
+item_id = "reception"
+
+[node name="WaitingChairs" type="Node2D" parent="Items"]
+position = Vector2(880, 860)
+script = ExtResource("3")
+item_id = "waiting_chairs"
+
+[node name="HospitalBed" type="Node2D" parent="Items"]
+position = Vector2(1300, 850)
+script = ExtResource("3")
+item_id = "hospital_bed"
+
+[node name="MedCabinet" type="Node2D" parent="Items"]
+position = Vector2(1650, 810)
+script = ExtResource("3")
+item_id = "medicine_cabinet"
 
 [node name="Characters" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -98,7 +101,7 @@ mouse_filter = 2
 theme_override_colors/font_color = Color(0.553, 0.431, 0.388, 1)
 theme_override_font_sizes/font_size = 36
 horizontal_alignment = 1
-text = "点左下角头像 → 拖动小人 → 双击小人换动作"
+text = "拖小人到诊疗床/候诊椅 · 拖听诊器/药瓶到病人身上"
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 0

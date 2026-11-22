@@ -8,6 +8,7 @@ const ST_SIT := 2
 const ST_SLEEP := 3
 const ST_EAT := 4
 const ST_HAPPY := 5
+const ST_INTERACT := 6
 
 var _ok := true
 
@@ -123,6 +124,98 @@ func _run() -> void:
 		_fail("换装未触发 state=" + str(c.state))
 	else:
 		print("UI_PROBE: 换装 OK")
+
+	# ---- M3：医院场景 ----
+	room.queue_free()
+	await _frames(2)
+	var hospital: Control = load("res://scenes/hospital/hospital.tscn").instantiate()
+	add_child(hospital)
+	await _frames(2)
+	var hchars: Node = hospital.get_node("Characters")
+	var hc: Node2D = hchars.get_child(0)
+	var hbed: Node2D = hospital.get_node("Items/HospitalBed")
+	var hbed_center: Vector2 = hbed.zone_rect().get_center()
+	_press(to_window * hc.position)
+	await _frames(2)
+	_move(to_window * hbed_center)
+	await _frames(2)
+	_release(to_window * hbed_center)
+	await _frames(2)
+	if hc.state != ST_SLEEP:
+		_fail("医院诊疗床未躺下 state=" + str(hc.state))
+	else:
+		print("UI_PROBE: 医院诊疗床 OK")
+
+	var hbar: Node = hospital.get_node("ItemBar")
+	var steth_btn: Control = hbar.get_child(0)
+	_press(to_window * steth_btn.get_global_rect().get_center())
+	await _frames(2)
+	_move(to_window * (hc.position + Vector2(0, -10)))
+	await _frames(2)
+	_release(to_window * (hc.position + Vector2(0, -10)))
+	await _frames(2)
+	if hc.state != ST_INTERACT:
+		_fail("听诊器未触发检查 state=" + str(hc.state))
+	else:
+		print("UI_PROBE: 听诊器检查 OK")
+
+	var med_btn: Control = hbar.get_child(1)
+	_press(to_window * med_btn.get_global_rect().get_center())
+	await _frames(2)
+	_move(to_window * (hc.position + Vector2(0, -10)))
+	await _frames(2)
+	_release(to_window * (hc.position + Vector2(0, -10)))
+	await _frames(2)
+	if hc.state != ST_EAT:
+		_fail("药瓶未触发吃药 state=" + str(hc.state))
+	else:
+		print("UI_PROBE: 吃药 OK")
+
+	# ---- M4：学校场景 ----
+	hospital.queue_free()
+	await _frames(2)
+	var school: Control = load("res://scenes/school/school.tscn").instantiate()
+	add_child(school)
+	await _frames(2)
+	var schars: Node = school.get_node("Characters")
+	var sc: Node2D = schars.get_child(0)
+	var desk1: Node2D = school.get_node("Items/Desk1")
+	var desk1_center: Vector2 = desk1.zone_rect().get_center()
+	_press(to_window * sc.position)
+	await _frames(2)
+	_move(to_window * desk1_center)
+	await _frames(2)
+	_release(to_window * desk1_center)
+	await _frames(2)
+	if sc.state != ST_SIT:
+		_fail("课桌未坐下 state=" + str(sc.state))
+	else:
+		print("UI_PROBE: 课桌坐下 OK")
+
+	var sbar: Node = school.get_node("ItemBar")
+	var book_btn: Control = sbar.get_child(0)
+	_press(to_window * book_btn.get_global_rect().get_center())
+	await _frames(2)
+	_move(to_window * (sc.position + Vector2(0, -10)))
+	await _frames(2)
+	_release(to_window * (sc.position + Vector2(0, -10)))
+	await _frames(2)
+	if sc.state != ST_INTERACT:
+		_fail("书本未触发阅读 state=" + str(sc.state))
+	else:
+		print("UI_PROBE: 读书 OK")
+
+	var ball_btn: Control = sbar.get_child(2)
+	_press(to_window * ball_btn.get_global_rect().get_center())
+	await _frames(2)
+	_move(to_window * (sc.position + Vector2(0, -10)))
+	await _frames(2)
+	_release(to_window * (sc.position + Vector2(0, -10)))
+	await _frames(2)
+	if sc.state != ST_HAPPY:
+		_fail("篮球未触发玩耍 state=" + str(sc.state))
+	else:
+		print("UI_PROBE: 玩球 OK")
 
 	print("UI_PROBE: " + ("PASS" if _ok else "FAIL"))
 	get_tree().quit(0 if _ok else 1)

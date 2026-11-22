@@ -28,7 +28,7 @@ func _ready() -> void:
 	_build_item_bar()
 	var chars := get_node_or_null("Characters")
 	if chars and chars.get_child_count() == 0:
-		spawn_character("mom")
+		spawn_character(str(info.get("default_character", "mom")))
 
 
 func _process(_delta: float) -> void:
@@ -55,6 +55,8 @@ func _build_avatar_bar() -> void:
 
 
 func _build_item_bar() -> void:
+	var info: Dictionary = GameData.scenes.get(scene_id, {})
+	var bar_items: Array = info.get("bar_items", ITEM_BAR)
 	var bar := HBoxContainer.new()
 	bar.name = "ItemBar"
 	bar.add_theme_constant_override("separation", 14)
@@ -66,10 +68,10 @@ func _build_item_bar() -> void:
 	bar.offset_right = -28.0
 	bar.offset_top = -206.0
 	bar.offset_bottom = -28.0
-	for id in ITEM_BAR:
+	for id in bar_items:
 		var btn := ItemButton.new()
-		btn.item_id = id
-		btn.button_down.connect(_on_item_button_down.bind(id))
+		btn.item_id = str(id)
+		btn.button_down.connect(_on_item_button_down.bind(str(id)))
 		bar.add_child(btn)
 
 

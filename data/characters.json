@@ -43,5 +43,18 @@
 			{"id": "coat", "shirt": "#ECEFF1"},
 			{"id": "scrubs", "shirt": "#80CBC4"}
 		]
+	},
+	"nurse": {
+		"name": "护士",
+		"palette": {"skin": "#FFE0C2", "hair": "#4E342E", "shirt": "#F8BBD0", "pants": "#90CAF9"},
+		"outfits": [
+			{"id": "uniform", "shirt": "#F8BBD0"},
+			{"id": "coat", "shirt": "#ECEFF1"}
+		]
+	},
+	"teacher": {
+		"name": "老师",
+		"palette": {"skin": "#FFCC9C", "hair": "#3E2723", "shirt": "#7986CB", "pants": "#455A64"},
+		"outfits": [{"id": "work", "shirt": "#7986CB"}]
 	}
 }

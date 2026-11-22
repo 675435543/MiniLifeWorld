@@ -1,5 +1,23 @@
 {
-	"home": {"name": "家", "path": "res://scenes/home/home.tscn", "building_color": "#FF8A65"},
-	"hospital": {"name": "医院", "path": "res://scenes/hospital/hospital.tscn", "building_color": "#64B5F6"},
-	"school": {"name": "学校", "path": "res://scenes/school/school.tscn", "building_color": "#AED581"}
+	"home": {
+		"name": "家",
+		"path": "res://scenes/home/home.tscn",
+		"building_color": "#FF8A65",
+		"default_character": "mom",
+		"bar_items": ["food", "water_cup", "clothes"]
+	},
+	"hospital": {
+		"name": "医院",
+		"path": "res://scenes/hospital/hospital.tscn",
+		"building_color": "#64B5F6",
+		"default_character": "doctor",
+		"bar_items": ["stethoscope", "medicine"]
+	},
+	"school": {
+		"name": "学校",
+		"path": "res://scenes/school/school.tscn",
+		"building_color": "#AED581",
+		"default_character": "teacher",
+		"bar_items": ["book", "pencil", "basketball"]
+	}
 }

@@ -27,6 +27,8 @@ func _draw() -> void:
 			_plant()
 		"desk":
 			_desk()
+		"school_desk":
+			_school_desk()
 		"chairs":
 			_chairs()
 		"hospital_bed":
@@ -105,6 +107,14 @@ func _desk() -> void:
 	draw_rect(Rect2(-60, -170, 120, 74), Color(0.25, 0.27, 0.3))
 	draw_rect(Rect2(-52, -162, 104, 58), Color(0.42, 0.65, 0.85))
 	draw_rect(Rect2(50, -110, 40, 30), Color(0.95, 0.9, 0.6))
+
+
+func _school_desk() -> void:
+	var wood := Color(0.82, 0.78, 0.72)
+	draw_rect(Rect2(-80, -64, 160, 18), wood)
+	draw_rect(Rect2(-70, -46, 12, 46), wood.darkened(0.18))
+	draw_rect(Rect2(58, -46, 12, 46), wood.darkened(0.18))
+	draw_rect(Rect2(-20, -84, 40, 20), Color(0.9, 0.85, 0.7))
 
 
 func _chairs() -> void:

@@ -1,6 +1,6 @@
 class_name Item
 extends PropDraw
-## 可交互道具/家具（M2）。
+## 可交互道具/家具（M2/M3/M4）。
 ## 家具静置在场景中，角色拖到热区触发互动；消耗品从道具栏拖到角色身上。
 
 @export var item_id := ""
@@ -39,6 +39,16 @@ func _draw() -> void:
 			draw_icon_cup(self, data)
 		"clothes":
 			draw_icon_clothes(self, data)
+		"stethoscope":
+			draw_icon_stethoscope(self, data)
+		"medicine":
+			draw_icon_medicine(self, data)
+		"book":
+			draw_icon_book(self, data)
+		"pencil":
+			draw_icon_pencil(self, data)
+		"basketball":
+			draw_icon_ball(self, data)
 		_:
 			super._draw()
 
@@ -69,6 +79,54 @@ static func draw_icon_clothes(ci: CanvasItem, info: Dictionary) -> void:
 	ci.draw_rect(Rect2(-34, -40, 18, 14), tint)
 	ci.draw_rect(Rect2(16, -40, 18, 14), tint)
 	ci.draw_circle(Vector2(0, -38), 6.0, Color(1, 1, 1, 0.7))
+
+
+static func draw_icon_stethoscope(ci: CanvasItem, info: Dictionary) -> void:
+	var tint := Color(str(info.get("color", "#90A4AE")))
+	_draw_icon_shadow(ci)
+	ci.draw_arc(Vector2(0, -30), 16.0, PI * 0.15, PI * 0.85, 14, tint, 4.0)
+	ci.draw_line(Vector2(-12, -22), Vector2(-2, 6), tint, 4.0)
+	ci.draw_line(Vector2(12, -22), Vector2(2, 6), tint, 4.0)
+	ci.draw_circle(Vector2(0, 14), 9.0, tint.lightened(0.3))
+
+
+static func draw_icon_medicine(ci: CanvasItem, info: Dictionary) -> void:
+	var tint := Color(str(info.get("color", "#E57373")))
+	_draw_icon_shadow(ci)
+	ci.draw_rect(Rect2(-14, -34, 28, 30), tint)
+	ci.draw_rect(Rect2(-9, -42, 18, 8), tint.darkened(0.25))
+	ci.draw_rect(Rect2(-12, -26, 24, 4), Color(1, 1, 1, 0.55))
+	ci.draw_rect(Rect2(-3, -18, 6, 14), Color(1, 1, 1, 0.85))
+	ci.draw_rect(Rect2(-7, -14, 14, 6), Color(1, 1, 1, 0.85))
+
+
+static func draw_icon_book(ci: CanvasItem, info: Dictionary) -> void:
+	var tint := Color(str(info.get("color", "#8D6E63")))
+	_draw_icon_shadow(ci)
+	ci.draw_rect(Rect2(-26, -34, 52, 34), tint)
+	ci.draw_rect(Rect2(-26, -34, 8, 34), tint.darkened(0.25))
+	ci.draw_rect(Rect2(-12, -28, 34, 4), Color(0.95, 0.95, 0.92))
+	ci.draw_rect(Rect2(-12, -20, 34, 4), Color(0.95, 0.95, 0.92))
+	ci.draw_rect(Rect2(-12, -12, 22, 4), Color(0.95, 0.95, 0.92))
+
+
+static func draw_icon_pencil(ci: CanvasItem, info: Dictionary) -> void:
+	var tint := Color(str(info.get("color", "#FFD54F")))
+	_draw_icon_shadow(ci)
+	ci.draw_set_transform(Vector2.ZERO, deg_to_rad(-30), Vector2.ONE)
+	ci.draw_rect(Rect2(-8, -36, 16, 40), tint)
+	ci.draw_rect(Rect2(-8, -36, 16, 8), Color(0.9, 0.4, 0.3))
+	ci.draw_rect(Rect2(-2, -44, 4, 8), Color(0.55, 0.4, 0.3))
+	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+
+static func draw_icon_ball(ci: CanvasItem, info: Dictionary) -> void:
+	var tint := Color(str(info.get("color", "#FF7043")))
+	_draw_icon_shadow(ci)
+	ci.draw_circle(Vector2(0, -20), 20.0, tint)
+	ci.draw_arc(Vector2(0, -20), 20.0, -0.9, 0.9, 12, Color(0.35, 0.2, 0.15), 2.0)
+	ci.draw_arc(Vector2(0, -20), 20.0, PI - 0.9, PI + 0.9, 12, Color(0.35, 0.2, 0.15), 2.0)
+	ci.draw_line(Vector2(-20, -20), Vector2(20, -20), Color(0.35, 0.2, 0.15), 2.0)
 
 
 static func _draw_icon_shadow(ci: CanvasItem) -> void:
