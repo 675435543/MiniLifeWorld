@@ -1,13 +1,16 @@
 extends Control
-## 场景基类（M1）：角色栏 + 触摸/鼠标拖拽角色 + 双击切换动作。
-## 后续里程碑在此基础加入家具交互与存档恢复。
+## 场景基类（M2）：角色栏 + 道具栏 + 拖拽角色/道具 + 家具互动。
 
 const CHARACTER_SCENE := preload("res://scenes/characters/character.tscn")
 const ROOM_RECT := Rect2(80.0, 320.0, 1760.0, 540.0)
+const ITEM_BAR := ["food", "water_cup", "clothes"]
+
+enum DragKind { NONE, CHARACTER, ITEM }
 
 @export var scene_id := ""
 
-var _dragging: Character = null
+var _dragging: Node2D = null
+var _drag_kind := DragKind.NONE
 var _drag_offset := Vector2.ZERO
 var _press_pos := Vector2.ZERO
 var _press_time := 0
@@ -22,22 +25,20 @@ func _ready() -> void:
 	if back_btn:
 		back_btn.pressed.connect(_on_back)
 	_build_avatar_bar()
+	_build_item_bar()
 	var chars := get_node_or_null("Characters")
 	if chars and chars.get_child_count() == 0:
 		spawn_character("mom")
 
 
 func _process(_delta: float) -> void:
-	# 兜底：拖拽中若鼠标已松开（比如在按钮上松手），强制放下，避免角色卡住
-	if _dragging and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		_release_at(get_global_mouse_position())
+	pass
 
 
 func _build_avatar_bar() -> void:
 	var bar := HBoxContainer.new()
 	bar.name = "AvatarBar"
 	bar.add_theme_constant_override("separation", 14)
-	# PASS：不拦截拖拽事件，避免角色在栏下方时点不到
 	bar.mouse_filter = Control.MOUSE_FILTER_PASS
 	add_child(bar)
 	bar.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
@@ -53,6 +54,25 @@ func _build_avatar_bar() -> void:
 		bar.add_child(avatar)
 
 
+func _build_item_bar() -> void:
+	var bar := HBoxContainer.new()
+	bar.name = "ItemBar"
+	bar.add_theme_constant_override("separation", 14)
+	bar.mouse_filter = Control.MOUSE_FILTER_PASS
+	add_child(bar)
+	bar.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	bar.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	bar.offset_left = -416.0
+	bar.offset_right = -28.0
+	bar.offset_top = -206.0
+	bar.offset_bottom = -28.0
+	for id in ITEM_BAR:
+		var btn := ItemButton.new()
+		btn.item_id = id
+		btn.button_down.connect(_on_item_button_down.bind(id))
+		bar.add_child(btn)
+
+
 func spawn_character(char_id: String) -> Character:
 	var c := CHARACTER_SCENE.instantiate() as Character
 	c.char_id = char_id
@@ -63,8 +83,30 @@ func spawn_character(char_id: String) -> Character:
 	return c
 
 
+## 从道具栏按下：立即生成一个跟随指针的可拖道具
+func spawn_item_from_bar(item_id: String) -> void:
+	if _dragging != null:
+		_release_at(_dragging.position)
+	var item := Item.new()
+	item.item_id = item_id
+	_item_parent().add_child(item)
+	item.position = get_viewport().get_mouse_position()
+	_dragging = item
+	_drag_kind = DragKind.ITEM
+	item.begin_drag()
+
+
+func _item_parent() -> Node:
+	var items := get_node_or_null("Items")
+	return items if items else self
+
+
 func _on_avatar_pressed(char_id: String) -> void:
 	spawn_character(char_id)
+
+
+func _on_item_button_down(item_id: String) -> void:
+	spawn_item_from_bar(item_id)
 
 
 func _on_back() -> void:
@@ -82,8 +124,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion and (event.button_mask & MOUSE_BUTTON_MASK_LEFT):
 		if _dragging:
 			var pos := _to_room_pos(event.position)
-			_dragging.position = _clamp_room(pos + _drag_offset)
+			_move_at(pos)
 			get_viewport().set_input_as_handled()
+
+
+## 兜底监听：即使松手发生在按钮等 UI 上（事件被 GUI 吃掉），也能可靠结束拖拽
+func _input(event: InputEvent) -> void:
+	if _dragging == null:
+		return
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+		_release_at(_to_room_pos(event.position))
 
 
 func _to_room_pos(screen_pos: Vector2) -> Vector2:
@@ -97,33 +147,115 @@ func _clamp_room(pos: Vector2) -> Vector2:
 	)
 
 
-func _press_at(pos: Vector2) -> void:
-	if _dragging:
-		_release_at(_dragging.position)
+func _char_hit(c: Character, pos: Vector2) -> bool:
+	return Rect2(c.position + Vector2(-46, -152), Vector2(92, 160)).has_point(pos)
+
+
+func _character_at(pos: Vector2) -> Character:
 	var chars := get_node("Characters").get_children()
 	for i in range(chars.size() - 1, -1, -1):
 		var c := chars[i] as Character
-		if c == null:
+		if c and _char_hit(c, pos):
+			return c
+	return null
+
+
+func _furniture_at(pos: Vector2) -> Item:
+	var items := get_node_or_null("Items")
+	if items == null:
+		return null
+	for child in items.get_children():
+		var it := child as Item
+		if it == null:
 			continue
-		if Rect2(c.position + Vector2(-46, -152), Vector2(92, 160)).has_point(pos):
-			_dragging = c
-			_drag_offset = c.position - pos
-			_press_pos = pos
-			_press_time = Time.get_ticks_msec()
-			c.begin_drag()
-			return
+		if str(it.data.get("interaction", "")).is_empty():
+			continue
+		if it.zone_rect().has_point(pos):
+			return it
+	return null
+
+
+func _press_at(pos: Vector2) -> void:
+	if _dragging:
+		_release_at(_dragging.position)
+	var c := _character_at(pos)
+	if c == null:
+		return
+	_dragging = c
+	_drag_kind = DragKind.CHARACTER
+	_drag_offset = c.position - pos
+	_press_pos = pos
+	_press_time = Time.get_ticks_msec()
+	c.begin_drag()
+
+
+func _move_at(pos: Vector2) -> void:
+	if _dragging == null:
+		return
+	if _drag_kind == DragKind.CHARACTER:
+		_dragging.position = _clamp_room(pos + _drag_offset)
+	else:
+		_dragging.position = pos
 
 
 func _release_at(pos: Vector2) -> void:
 	if _dragging == null:
 		return
-	var c := _dragging
+	var target := _dragging
+	var kind := _drag_kind
 	_dragging = null
-	c.end_drag()
-	var moved := pos.distance_to(_press_pos) > 12.0
-	var quick := Time.get_ticks_msec() - _press_time < 380
-	if not moved and quick:
-		_cycle_state(c)
+	_drag_kind = DragKind.NONE
+	target.end_drag()
+	if kind == DragKind.CHARACTER:
+		var c := target as Character
+		var moved := pos.distance_to(_press_pos) > 12.0
+		var quick := Time.get_ticks_msec() - _press_time < 380
+		if not moved and quick:
+			_cycle_state(c)
+			return
+		_resolve_character_drop(c)
+	else:
+		_resolve_item_drop(target as Item, pos)
+
+
+func _resolve_character_drop(c: Character) -> void:
+	var furniture := _furniture_at(c.position)
+	if furniture != null and InteractionManager.try_character_furniture(c, furniture):
+		return
+	c.set_state(Character.State.IDLE)
+
+
+func _resolve_item_drop(item: Item, pos: Vector2) -> void:
+	item.position = pos
+	var target := _character_at(pos)
+	if target != null and InteractionManager.try_character_item(target, item):
+		_consume_item(item)
+		return
+	_return_item_to_bar(item)
+	if target != null and InteractionManager.try_character_item(target, item):
+		_consume_item(item)
+		return
+	_return_item_to_bar(item)
+
+
+func _consume_item(item: Node2D) -> void:
+	var tw := item.create_tween()
+	tw.tween_property(item, "scale", Vector2.ZERO, 0.18)
+	tw.tween_callback(item.queue_free)
+
+
+func _return_item_to_bar(item: Node2D) -> void:
+	var target := Vector2(960, 980)
+	var bar := get_node_or_null("ItemBar")
+	if bar:
+		for b in bar.get_children():
+			if b is ItemButton and b.item_id == item.item_id:
+				target = b.get_global_rect().get_center()
+				break
+	var tw := item.create_tween()
+	tw.tween_property(item, "position", target, 0.25)
+	tw.tween_property(item, "modulate:a", 0.0, 0.15)
+	tw.tween_callback(item.queue_free)
 
 
 func _cycle_state(c: Character) -> void:

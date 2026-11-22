@@ -19,6 +19,8 @@ var _drag_scale := 1.0
 var _blink_timer := 0.0
 var _blink_left := 0.0
 var _hop := 0.0
+var _hold_timer := 0.0
+var _shirt_override := Color(0, 0, 0, 0)
 
 
 func _ready() -> void:
@@ -35,6 +37,13 @@ func set_state(next: State) -> void:
 	state = next
 	_hop = 0.0
 	rotation = PI * 0.5 if state == State.SLEEP else 0.0
+	if state in [State.EAT, State.HAPPY, State.INTERACT]:
+		_hold_timer = 2.2
+	queue_redraw()
+
+
+func apply_outfit(color: Color) -> void:
+	_shirt_override = color
 	queue_redraw()
 
 
@@ -68,6 +77,12 @@ func _process(delta: float) -> void:
 			animated = Vector2.ONE
 	scale = animated * _drag_scale
 
+	# 吃/开心/互动动作播放一会后回到静止
+	if state in [State.EAT, State.HAPPY, State.INTERACT]:
+		_hold_timer -= delta
+		if _hold_timer <= 0.0:
+			set_state(State.IDLE)
+
 	# 随机眨眼
 	_blink_timer -= delta
 	if _blink_timer <= 0.0:
@@ -82,11 +97,12 @@ func _draw() -> void:
 	var skin := Color(str(palette.get("skin", "#FFCC9C")))
 	var hair := Color(str(palette.get("hair", "#5D4037")))
 	var shirt := Color(str(palette.get("shirt", "#FF8A65")))
+	if _shirt_override.a > 0.0:
+		shirt = _shirt_override
 	var pants := Color(str(palette.get("pants", "#64B5F6")))
 	var ink := Color(0.2, 0.13, 0.10)
 
 	# 地面阴影（不随跳跃移动）
-	draw_set_transform(Vector2(0, _hop), 0.0, Vector2.ONE)
 	draw_set_transform(Vector2(0, 2), 0.0, Vector2(1.5, 0.55))
 	draw_circle(Vector2.ZERO, 20.0, Color(0.15, 0.1, 0.08, 0.18))
 	draw_set_transform(Vector2(0, _hop), 0.0, Vector2.ONE)

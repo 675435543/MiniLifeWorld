@@ -1,21 +1,18 @@
 extends Node
 ## 交互系统（Autoload: InteractionManager）
-## M0 阶段为占位框架；M2 起由场景/道具数据驱动角色状态。
+## 统一规则表：角色 × 家具 / 角色 × 道具，数据来自 data/items.json 的 interaction 字段。
 
-## 交互类型（与 data/items.json 的 interaction 字段对应）
-const INTERACTIONS := ["eat", "drink", "sit", "sleep", "read", "play", "use", "wear", "examine"]
-
-## 道具 interaction 字段 -> 角色应进入的状态
+## 道具 interaction 字段 -> 角色状态（供调试与未来扩展）
 var _state_map: Dictionary = {
 	"eat": "eat",
 	"drink": "eat",
 	"sit": "sit",
 	"sleep": "sleep",
-	"read": "read",
-	"play": "play",
+	"read": "interact",
+	"play": "happy",
 	"use": "interact",
-	"wear": "idle",
-	"examine": "idle",
+	"wear": "happy",
+	"examine": "interact",
 }
 
 
@@ -23,6 +20,39 @@ func state_for(interaction: String) -> String:
 	return str(_state_map.get(interaction, "interact"))
 
 
-func interact(_character: Node, _target: Node, _item_data: Dictionary = {}) -> void:
-	# M2 起：根据 item_data.interaction 让角色进入对应状态并播放动作。
-	pass
+## 角色落在家具上：床→躺下、沙发/椅子→坐下、电视等→开心互动
+func try_character_furniture(c: Character, item: Item) -> bool:
+	var inter := str(item.data.get("interaction", ""))
+	match inter:
+		"sleep":
+			c.set_state(Character.State.SLEEP)
+			c.position = item.zone_rect().get_center() + Vector2(0, 16)
+			return true
+		"sit":
+			c.set_state(Character.State.SIT)
+			c.position = item.zone_rect().get_center() + Vector2(0, 14)
+			return true
+		"use", "read", "play":
+			c.set_state(Character.State.HAPPY)
+			return true
+	return false
+
+
+## 道具拖到角色身上：食物→吃、水→喝、衣服→换装
+func try_character_item(c: Character, item: Item) -> bool:
+	var inter := str(item.data.get("interaction", ""))
+	match inter:
+		"eat", "drink":
+			c.set_state(Character.State.EAT)
+			return true
+		"wear":
+			c.apply_outfit(Color(str(item.data.get("shirt", "#FF8A65"))))
+			c.set_state(Character.State.HAPPY)
+			return true
+		"play":
+			c.set_state(Character.State.HAPPY)
+			return true
+		"read", "use", "examine":
+			c.set_state(Character.State.INTERACT)
+			return true
+	return false
