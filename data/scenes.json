@@ -1,0 +1,5 @@
+{
+	"home": {"name": "家", "path": "res://scenes/home/home.tscn", "building_color": "#FF8A65"},
+	"hospital": {"name": "医院", "path": "res://scenes/hospital/hospital.tscn", "building_color": "#64B5F6"},
+	"school": {"name": "学校", "path": "res://scenes/school/school.tscn", "building_color": "#AED581"}
+}

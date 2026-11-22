@@ -1,0 +1,44 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+
+config_version=5
+
+[application]
+
+config/name="Mini Life World"
+config/description="我的小世界 · 自由故事乐园"
+run/main_scene="res://scenes/main/main_menu.tscn"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/show_image=false
+
+[autoload]
+
+GameData="*res://scripts/autoload/game_data.gd"
+SaveManager="*res://scripts/autoload/save_manager.gd"
+SceneManager="*res://scripts/autoload/scene_manager.gd"
+InteractionManager="*res://scripts/autoload/interaction_manager.gd"
+DevCapture="*res://scripts/dev/dev_capture.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=4
+
+[gui]
+
+theme/custom="res://assets/ui/main_theme.tres"
+
+[input_devices]
+
+pointing/emulate_mouse_from_touch=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

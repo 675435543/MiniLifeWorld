@@ -1,0 +1,47 @@
+{
+	"mom": {
+		"name": "妈妈",
+		"palette": {"skin": "#FFCC9C", "hair": "#5D4037", "shirt": "#FF8A65", "pants": "#64B5F6"},
+		"outfits": [
+			{"id": "home", "shirt": "#FF8A65"},
+			{"id": "work", "shirt": "#80CBC4"}
+		]
+	},
+	"dad": {
+		"name": "爸爸",
+		"palette": {"skin": "#FFCC9C", "hair": "#3E2723", "shirt": "#64B5F6", "pants": "#455A64"},
+		"outfits": [
+			{"id": "home", "shirt": "#64B5F6"},
+			{"id": "work", "shirt": "#90A4AE"}
+		]
+	},
+	"baby": {
+		"name": "宝宝",
+		"palette": {"skin": "#FFE0C2", "hair": "#8D6E63", "shirt": "#FFD54F", "pants": "#FFB74D"},
+		"outfits": [{"id": "home", "shirt": "#FFD54F"}]
+	},
+	"brother": {
+		"name": "哥哥",
+		"palette": {"skin": "#FFCC9C", "hair": "#4E342E", "shirt": "#4DB6AC", "pants": "#5D4037"},
+		"outfits": [
+			{"id": "home", "shirt": "#4DB6AC"},
+			{"id": "pajamas", "shirt": "#B39DDB"}
+		]
+	},
+	"sister": {
+		"name": "姐姐",
+		"palette": {"skin": "#FFE0C2", "hair": "#6D4C41", "shirt": "#F06292", "pants": "#9575CD"},
+		"outfits": [
+			{"id": "home", "shirt": "#F06292"},
+			{"id": "dress", "shirt": "#F48FB1"}
+		]
+	},
+	"doctor": {
+		"name": "医生",
+		"palette": {"skin": "#FFCC9C", "hair": "#37474F", "shirt": "#ECEFF1", "pants": "#B0BEC5"},
+		"outfits": [
+			{"id": "coat", "shirt": "#ECEFF1"},
+			{"id": "scrubs", "shirt": "#80CBC4"}
+		]
+	}
+}
