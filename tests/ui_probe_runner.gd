@@ -19,6 +19,10 @@ func _ready() -> void:
 
 func _run() -> void:
 	await get_tree().process_frame
+	# 测试隔离：清掉旧存档，避免上次运行的角色/服装污染本次断言
+	if FileAccess.file_exists("user://save.json"):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path("user://save.json"))
+	SaveManager.data = SaveManager._default_data()
 	var room: Control = load("res://scenes/home/home.tscn").instantiate()
 	add_child(room)
 	await get_tree().process_frame

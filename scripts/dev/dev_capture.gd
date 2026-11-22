@@ -18,6 +18,10 @@ func _ready() -> void:
 
 func _run_capture() -> void:
 	await get_tree().process_frame
+	# 截图用干净存档，避免恢复上次运行留下的角色
+	if FileAccess.file_exists("user://save.json"):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path("user://save.json"))
+	SaveManager.data = SaveManager._default_data()
 	await _capture_current("01_menu")
 
 	var tree := get_tree()
@@ -28,6 +32,8 @@ func _run_capture() -> void:
 	var cases := [
 		["02_world_map", "res://scenes/main/world_map.tscn"],
 		["03_home", "res://scenes/home/home.tscn"],
+		["04_hospital", "res://scenes/hospital/hospital.tscn"],
+		["05_school", "res://scenes/school/school.tscn"],
 	]
 	for c in cases:
 		var ps := load(c[1]) as PackedScene

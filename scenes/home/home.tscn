@@ -41,42 +41,72 @@ color = Color(0.957, 0.812, 0.62, 1)
 
 [node name="Decor" type="Node2D" parent="."]
 
+[node name="Window1" type="Node2D" parent="Decor"]
+position = Vector2(330, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Window2" type="Node2D" parent="Decor"]
+position = Vector2(1100, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Window3" type="Node2D" parent="Decor"]
+position = Vector2(1750, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Rug1" type="Node2D" parent="Decor"]
+position = Vector2(430, 890)
+script = ExtResource("2")
+prop_type = "rug"
+
+[node name="Rug2" type="Node2D" parent="Decor"]
+position = Vector2(1500, 940)
+script = ExtResource("2")
+prop_type = "rug"
+
 [node name="Plant" type="Node2D" parent="Decor"]
-position = Vector2(1830, 930)
+position = Vector2(1870, 940)
 script = ExtResource("2")
 prop_type = "plant"
 
 [node name="Items" type="Node2D" parent="."]
 
+[node name="Tv" type="Node2D" parent="Items"]
+position = Vector2(150, 870)
+script = ExtResource("3")
+item_id = "tv"
+
 [node name="Sofa" type="Node2D" parent="Items"]
-position = Vector2(500, 810)
+position = Vector2(430, 830)
 script = ExtResource("3")
 item_id = "sofa"
 
 [node name="Table" type="Node2D" parent="Items"]
-position = Vector2(860, 880)
+position = Vector2(1000, 880)
 script = ExtResource("3")
 item_id = "table"
 
-[node name="Tv" type="Node2D" parent="Items"]
-position = Vector2(1180, 860)
+[node name="Chair" type="Node2D" parent="Items"]
+position = Vector2(1160, 860)
 script = ExtResource("3")
-item_id = "tv"
+item_id = "chair"
 
 [node name="Bed" type="Node2D" parent="Items"]
-position = Vector2(1520, 860)
+position = Vector2(1500, 870)
 script = ExtResource("3")
 item_id = "bed"
 
+[node name="Wardrobe" type="Node2D" parent="Items"]
+position = Vector2(1790, 800)
+script = ExtResource("3")
+item_id = "wardrobe"
+
 [node name="Fridge" type="Node2D" parent="Items"]
-position = Vector2(1760, 780)
+position = Vector2(700, 720)
 script = ExtResource("3")
 item_id = "fridge"
-
-[node name="Chair" type="Node2D" parent="Items"]
-position = Vector2(1040, 850)
-script = ExtResource("3")
-item_id = "chair"
 
 [node name="Characters" type="Node2D" parent="."]
 y_sort_enabled = true

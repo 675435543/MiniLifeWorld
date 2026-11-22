@@ -41,32 +41,62 @@ color = Color(0.82, 0.89, 0.96, 1)
 
 [node name="Decor" type="Node2D" parent="."]
 
+[node name="Window1" type="Node2D" parent="Decor"]
+position = Vector2(300, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Window2" type="Node2D" parent="Decor"]
+position = Vector2(1100, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Window3" type="Node2D" parent="Decor"]
+position = Vector2(1750, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Divider" type="Node2D" parent="Decor"]
+position = Vector2(900, 780)
+script = ExtResource("2")
+prop_type = "divider"
+
 [node name="Plant" type="Node2D" parent="Decor"]
-position = Vector2(1830, 930)
+position = Vector2(1870, 940)
 script = ExtResource("2")
 prop_type = "plant"
 
 [node name="Items" type="Node2D" parent="."]
 
 [node name="Reception" type="Node2D" parent="Items"]
-position = Vector2(500, 830)
+position = Vector2(200, 810)
 script = ExtResource("3")
 item_id = "reception"
 
 [node name="WaitingChairs" type="Node2D" parent="Items"]
-position = Vector2(880, 860)
+position = Vector2(520, 850)
 script = ExtResource("3")
 item_id = "waiting_chairs"
 
+[node name="DoctorDesk" type="Node2D" parent="Items"]
+position = Vector2(1200, 860)
+script = ExtResource("3")
+item_id = "doctor_desk"
+
 [node name="HospitalBed" type="Node2D" parent="Items"]
-position = Vector2(1300, 850)
+position = Vector2(1480, 860)
 script = ExtResource("3")
 item_id = "hospital_bed"
 
 [node name="MedCabinet" type="Node2D" parent="Items"]
-position = Vector2(1650, 810)
+position = Vector2(1700, 750)
 script = ExtResource("3")
 item_id = "medicine_cabinet"
+
+[node name="Curtain" type="Node2D" parent="Items"]
+position = Vector2(1840, 800)
+script = ExtResource("3")
+item_id = "curtain"
 
 [node name="Characters" type="Node2D" parent="."]
 y_sort_enabled = true

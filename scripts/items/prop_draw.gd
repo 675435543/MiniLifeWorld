@@ -29,8 +29,22 @@ func _draw() -> void:
 			_desk()
 		"school_desk":
 			_school_desk()
+		"doctor_desk":
+			_doctor_desk()
 		"chairs":
 			_chairs()
+		"rug":
+			_rug()
+		"wardrobe":
+			_wardrobe()
+		"window":
+			_window()
+		"divider":
+			_divider()
+		"bookshelf":
+			_bookshelf()
+		"curtain":
+			_curtain()
 		"hospital_bed":
 			_hospital_bed()
 		"cabinet":
@@ -115,6 +129,75 @@ func _school_desk() -> void:
 	draw_rect(Rect2(-70, -46, 12, 46), wood.darkened(0.18))
 	draw_rect(Rect2(58, -46, 12, 46), wood.darkened(0.18))
 	draw_rect(Rect2(-20, -84, 40, 20), Color(0.9, 0.85, 0.7))
+
+
+func _doctor_desk() -> void:
+	var white := Color(0.95, 0.97, 1.0)
+	draw_rect(Rect2(-80, -64, 160, 18), white)
+	draw_rect(Rect2(-70, -46, 12, 46), white.darkened(0.12))
+	draw_rect(Rect2(58, -46, 12, 46), white.darkened(0.12))
+	draw_rect(Rect2(-40, -110, 80, 40), Color(0.25, 0.3, 0.35))
+	draw_rect(Rect2(-34, -104, 68, 28), Color(0.55, 0.75, 0.9))
+	var red := Color(0.85, 0.3, 0.3)
+	draw_rect(Rect2(32, -86, 16, 6), red)
+	draw_rect(Rect2(37, -91, 6, 16), red)
+
+
+func _rug() -> void:
+	var c := Color(0.93, 0.78, 0.6)
+	draw_rect(Rect2(-170, -16, 340, 16), c)
+	draw_rect(Rect2(-162, -12, 324, 12), c.lightened(0.18))
+	draw_rect(Rect2(-170, -16, 340, 3), c.darkened(0.12))
+
+
+func _wardrobe() -> void:
+	var c := Color(0.7, 0.5, 0.35)
+	draw_rect(Rect2(-55, -190, 110, 190), c)
+	draw_line(Vector2(0, -190), Vector2(0, 0), c.darkened(0.25), 3.0)
+	draw_rect(Rect2(-20, -120, 8, 26), c.darkened(0.35))
+	draw_rect(Rect2(12, -120, 8, 26), c.darkened(0.35))
+	draw_rect(Rect2(-55, -190, 110, 8), c.darkened(0.2))
+
+
+func _window() -> void:
+	var frame := Color(0.97, 0.97, 1.0)
+	draw_rect(Rect2(-90, -170, 180, 150), frame)
+	draw_rect(Rect2(-80, -160, 160, 130), Color(0.62, 0.82, 0.95))
+	draw_line(Vector2(0, -160), Vector2(0, -30), frame, 6.0)
+	draw_line(Vector2(-80, -95), Vector2(80, -95), frame, 6.0)
+	draw_rect(Rect2(-90, -25, 180, 10), frame.darkened(0.15))
+
+
+func _divider() -> void:
+	var wall := Color(0.95, 0.9, 0.82)
+	draw_rect(Rect2(-18, -260, 36, 260), wall)
+	draw_rect(Rect2(-24, -270, 48, 12), wall.darkened(0.12))
+	draw_rect(Rect2(-18, -260, 36, 4), wall.darkened(0.06))
+
+
+func _bookshelf() -> void:
+	var wood := Color(0.6, 0.42, 0.3)
+	draw_rect(Rect2(-70, -170, 140, 170), wood.darkened(0.1))
+	draw_rect(Rect2(-60, -158, 120, 24), Color(0.9, 0.87, 0.8))
+	draw_rect(Rect2(-60, -120, 120, 24), Color(0.9, 0.87, 0.8))
+	draw_rect(Rect2(-60, -82, 120, 24), Color(0.9, 0.87, 0.8))
+	var books := [Color(0.82, 0.35, 0.32), Color(0.4, 0.6, 0.85), Color(0.5, 0.75, 0.5), Color(0.9, 0.75, 0.35)]
+	for i in range(6):
+		draw_rect(Rect2(-54 + i * 18, -156, 14, 22), books[i % 4])
+	for i in range(5):
+		draw_rect(Rect2(-54 + i * 20, -118, 16, 20), books[(i + 1) % 4])
+	for i in range(4):
+		draw_rect(Rect2(-54 + i * 24, -80, 18, 20), books[(i + 2) % 4])
+
+
+func _curtain() -> void:
+	var panel := Color(0.8, 0.88, 0.97)
+	draw_rect(Rect2(-70, -220, 140, 220), panel)
+	draw_rect(Rect2(-76, -228, 152, 10), panel.darkened(0.2))
+	for i in range(4):
+		draw_line(Vector2(-50 + i * 34, -214), Vector2(-50 + i * 34, -8), panel.darkened(0.12), 3.0)
+	draw_rect(Rect2(-70, -220, 4, 220), panel.darkened(0.1))
+	draw_rect(Rect2(66, -220, 4, 220), panel.darkened(0.1))
 
 
 func _chairs() -> void:
