@@ -34,6 +34,8 @@ func _draw() -> void:
 			_doctor_desk()
 		"chairs":
 			_chairs()
+		"chair":
+			_single_chair()
 		"rug":
 			_rug()
 		"wardrobe":
@@ -225,6 +227,10 @@ func _chairs() -> void:
 	_chair(-90)
 	_chair(0)
 	_chair(90)
+
+
+func _single_chair() -> void:
+	_chair(0)
 
 
 func _chair(x: float) -> void:
