@@ -47,6 +47,13 @@ func apply_outfit(color: Color) -> void:
 	queue_redraw()
 
 
+## 当前衣服颜色（存档用）
+func shirt_color() -> Color:
+	if _shirt_override.a > 0.0:
+		return _shirt_override
+	return Color(str(palette.get("shirt", "#FF8A65")))
+
+
 func begin_drag() -> void:
 	_drag_scale = 1.12
 

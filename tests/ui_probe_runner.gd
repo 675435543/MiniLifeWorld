@@ -125,9 +125,29 @@ func _run() -> void:
 	else:
 		print("UI_PROBE: 换装 OK")
 
-	# ---- M3：医院场景 ----
+	# ---- M5：存档恢复（退出场景 → 重新进入应恢复位置/服装）----
+	var saved_shirt: Color = c.shirt_color()
+	var saved_x: float = c.position.x
 	room.queue_free()
+	await _frames(3)
+	var room2: Control = load("res://scenes/home/home.tscn").instantiate()
+	add_child(room2)
+	await _frames(3)
+	var chars2: Node = room2.get_node("Characters")
+	if chars2.get_child_count() < 1:
+		_fail("存档恢复后角色缺失")
+	else:
+		var c2: Node2D = chars2.get_child(0)
+		var pos_ok := absf(c2.position.x - saved_x) <= 1.5
+		var shirt_ok: bool = c2.shirt_color().to_html(false) == saved_shirt.to_html(false)
+		if pos_ok and shirt_ok:
+			print("UI_PROBE: 存档恢复 OK")
+		else:
+			_fail("存档恢复不符 pos=%f/%f shirt=%s/%s" % [c2.position.x, saved_x, c2.shirt_color().to_html(false), saved_shirt.to_html(false)])
+	room2.queue_free()
 	await _frames(2)
+
+	# ---- M3：医院场景 ----
 	var hospital: Control = load("res://scenes/hospital/hospital.tscn").instantiate()
 	add_child(hospital)
 	await _frames(2)

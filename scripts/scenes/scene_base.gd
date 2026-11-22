@@ -26,9 +26,50 @@ func _ready() -> void:
 		back_btn.pressed.connect(_on_back)
 	_build_avatar_bar()
 	_build_item_bar()
+	_restore_or_spawn(info)
+
+
+func _exit_tree() -> void:
+	_save_scene_state()
+
+
+func _restore_or_spawn(info: Dictionary) -> void:
+	var chars := get_node("Characters")
+	var saved: Dictionary = SaveManager.scene_state(scene_id)
+	var list: Array = saved.get("characters", [])
+	if not list.is_empty():
+		for entry in list:
+			if typeof(entry) != TYPE_DICTIONARY:
+				continue
+			var e: Dictionary = entry
+			var c := CHARACTER_SCENE.instantiate() as Character
+			c.char_id = str(e.get("id", ""))
+			chars.add_child(c)
+			var p: Array = e.get("pos", [0.0, 0.0])
+			c.position = Vector2(float(p[0]), float(p[1]))
+			var outfit := str(e.get("outfit", ""))
+			if not outfit.is_empty():
+				c.apply_outfit(Color("#" + outfit))
+		return
+	spawn_character(str(info.get("default_character", "mom")))
+
+
+func _save_scene_state() -> void:
 	var chars := get_node_or_null("Characters")
-	if chars and chars.get_child_count() == 0:
-		spawn_character(str(info.get("default_character", "mom")))
+	if chars == null:
+		return
+	var list := []
+	for child in chars.get_children():
+		var ch := child as Character
+		if ch == null:
+			continue
+		list.append({
+			"id": ch.char_id,
+			"pos": [ch.position.x, ch.position.y],
+			"outfit": ch.shirt_color().to_html(false),
+		})
+	SaveManager.set_scene_state(scene_id, {"characters": list})
+	SaveManager.save_game()
 
 
 func _process(_delta: float) -> void:

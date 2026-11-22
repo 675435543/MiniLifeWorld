@@ -1,6 +1,6 @@
 extends Node
 ## 存档管理（Autoload: SaveManager）
-## 存档写入 user://save.json，场景切换/退出时自动保存。
+## user://save.json；场景切换 / 场景退出 / 关闭窗口时自动保存。
 
 const SAVE_PATH := "user://save.json"
 
@@ -10,6 +10,14 @@ var data: Dictionary = {}
 func _ready() -> void:
 	data = _default_data()
 	load_game()
+	# 关闭窗口/安卓返回键时先存档再退出
+	get_tree().set_auto_accept_quit(false)
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		save_game()
+		get_tree().quit()
 
 
 func _default_data() -> Dictionary:
@@ -47,3 +55,15 @@ func save_game() -> void:
 func mark_tutorial_seen() -> void:
 	data["tutorial_seen"] = true
 	save_game()
+
+
+## 某场景的已保存状态（角色列表等），没有则返回空字典
+func scene_state(scene_id: String) -> Dictionary:
+	var states: Dictionary = data.get("scene_states", {})
+	return states.get(scene_id, {})
+
+
+func set_scene_state(scene_id: String, state: Dictionary) -> void:
+	var states: Dictionary = data.get("scene_states", {})
+	states[scene_id] = state
+	data["scene_states"] = states
