@@ -19,6 +19,7 @@ func _check_scripts() -> bool:
 		"res://scripts/characters/character.gd",
 		"res://scripts/ui/avatar_button.gd",
 		"res://scripts/items/prop_draw.gd",
+		"res://scripts/items/airplane.gd",
 	]:
 		if load(s) == null:
 			push_error("脚本加载失败: " + str(s))
@@ -50,6 +51,7 @@ func _check_scenes() -> bool:
 		"res://scenes/school/school.tscn",
 		"res://scenes/playground/playground.tscn",
 		"res://scenes/restaurant/restaurant.tscn",
+		"res://scenes/airport/airport.tscn",
 		"res://scenes/characters/character.tscn",
 	]
 	var ok := true

@@ -222,14 +222,36 @@ func _press_at(pos: Vector2) -> void:
 	if _dragging:
 		_release_at(_dragging.position)
 	var c := _character_at(pos)
-	if c == null:
+	if c != null:
+		_start_character_drag(c, pos)
 		return
+	_try_plane(pos)
+
+
+func _start_character_drag(c: Character, pos: Vector2) -> void:
 	_dragging = c
 	_drag_kind = DragKind.CHARACTER
 	_drag_offset = c.position - pos
 	_press_pos = pos
 	_press_time = Time.get_ticks_msec()
 	c.begin_drag()
+
+
+## 点飞机：乘客在飞机上时，按住乘客可把 TA 拖下来；否则点击机身触发飞行
+func _try_plane(pos: Vector2) -> void:
+	var plane := get_node_or_null("Airplane")
+	if plane == null:
+		return
+	var rider: Variant = plane.get("passenger")
+	if rider != null:
+		var p := rider as Character
+		if p != null and Rect2(p.global_position + Vector2(-46, -152), Vector2(92, 160)).has_point(pos):
+			var c := plane.unboard() as Character
+			if c != null:
+				_start_character_drag(c, pos)
+			return
+	if plane.hit_rect().has_point(pos):
+		plane.click()
 
 
 func _move_at(pos: Vector2) -> void:
@@ -265,16 +287,17 @@ func _resolve_character_drop(c: Character) -> void:
 	var furniture := _furniture_at(c.position)
 	if furniture != null and InteractionManager.try_character_furniture(c, furniture):
 		return
+	var plane := get_node_or_null("Airplane")
+	if plane != null and plane.get("passenger") == null and plane.hit_rect().has_point(c.position):
+		plane.board(c)
+		c.set_state(Character.State.IDLE)
+		return
 	c.set_state(Character.State.IDLE)
 
 
 func _resolve_item_drop(item: Item, pos: Vector2) -> void:
 	item.position = pos
 	var target := _character_at(pos)
-	if target != null and InteractionManager.try_character_item(target, item):
-		_consume_item(item)
-		return
-	_return_item_to_bar(item)
 	if target != null and InteractionManager.try_character_item(target, item):
 		_consume_item(item)
 		return

@@ -53,6 +53,8 @@ func _draw() -> void:
 			draw_icon_dish(self, data)
 		"juice":
 			draw_icon_juice(self, data)
+		"burger":
+			draw_icon_burger(self, data)
 		_:
 			super._draw()
 
@@ -149,6 +151,22 @@ static func draw_icon_juice(ci: CanvasItem, info: Dictionary) -> void:
 	ci.draw_rect(Rect2(-14, -40, 28, 36), tint)
 	ci.draw_rect(Rect2(-16, -44, 32, 6), tint.lightened(0.2))
 	ci.draw_line(Vector2(6, -44), Vector2(14, -58), Color(0.9, 0.3, 0.3), 3.0)
+
+
+static func draw_icon_burger(ci: CanvasItem, info: Dictionary) -> void:
+	var tint := Color(str(info.get("color", "#E57373")))
+	_draw_icon_shadow(ci)
+	# 上层面包
+	ci.draw_circle(Vector2(0, -28), 22.0, Color(0.9, 0.72, 0.42))
+	ci.draw_rect(Rect2(-22, -30, 44, 10), Color(0.9, 0.72, 0.42))
+	# 生菜 + 肉饼
+	ci.draw_rect(Rect2(-24, -20, 48, 6), Color(0.45, 0.72, 0.4))
+	ci.draw_rect(Rect2(-24, -14, 48, 8), tint)
+	# 芝士
+	ci.draw_colored_polygon(PackedVector2Array([Vector2(-22, -12), Vector2(22, -12), Vector2(14, -6), Vector2(-14, -6)]), Color(1.0, 0.85, 0.4))
+	# 下层面包
+	ci.draw_rect(Rect2(-22, -6, 44, 10), Color(0.9, 0.72, 0.42))
+	ci.draw_circle(Vector2(0, 4), 22.0, Color(0.9, 0.72, 0.42))
 
 
 static func _draw_icon_shadow(ci: CanvasItem) -> void:

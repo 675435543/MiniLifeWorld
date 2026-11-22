@@ -4,6 +4,7 @@ extends Node2D
 ## M2 起会被可交互的 Item 替换，这里先保证场景「有东西可看」。
 
 @export var prop_type := ""
+@export var sign_text := "餐厅"
 
 
 func _ready() -> void:
@@ -356,7 +357,7 @@ func _sign() -> void:
 	draw_rect(Rect2(-130, -90, 260, 90), wood)
 	draw_rect(Rect2(-120, -82, 240, 74), wood.lightened(0.12))
 	draw_rect(Rect2(-130, -90, 260, 8), wood.darkened(0.15))
-	draw_string(ThemeDB.fallback_font, Vector2(-130, -20), "餐厅", HORIZONTAL_ALIGNMENT_CENTER, 260, 56, Color(0.28, 0.2, 0.15))
+	draw_string(ThemeDB.fallback_font, Vector2(-130, -20), sign_text, HORIZONTAL_ALIGNMENT_CENTER, 260, 56, Color(0.28, 0.2, 0.15))
 
 
 func _counter() -> void:

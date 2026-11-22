@@ -33,5 +33,12 @@
 		"building_color": "#E57373",
 		"default_character": "dad",
 		"bar_items": ["dish", "juice"]
+	},
+	"airport": {
+		"name": "机场",
+		"path": "res://scenes/airport/airport.tscn",
+		"building_color": "#90CAF9",
+		"default_character": "dad",
+		"bar_items": ["burger", "juice"]
 	}
 }

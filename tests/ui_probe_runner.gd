@@ -343,6 +343,62 @@ func _run() -> void:
 	else:
 		print("UI_PROBE: 饮料 OK")
 
+	# ---- 机场 ----
+	rest.queue_free()
+	await _frames(2)
+	var air: Control = load("res://scenes/airport/airport.tscn").instantiate()
+	add_child(air)
+	await _frames(2)
+	var achars: Node = air.get_node("Characters")
+	var ac: Node2D = achars.get_child(0)
+	var plane: Node2D = air.get_node("Airplane")
+
+	var abar: Node = air.get_node("ItemBar")
+	var burger_btn: Control = abar.get_child(0)
+	_press(to_window * burger_btn.get_global_rect().get_center())
+	await _frames(2)
+	_move(to_window * (ac.position + Vector2(0, -10)))
+	await _frames(2)
+	_release(to_window * (ac.position + Vector2(0, -10)))
+	await _frames(2)
+	if ac.state != ST_EAT:
+		_fail("机场买吃的未触发 state=" + str(ac.state))
+	else:
+		print("UI_PROBE: 机场买吃的 OK")
+
+	# 点飞机 → 从左飞到右
+	var plane_start: Vector2 = plane.position
+	_press(to_window * plane_start)
+	await _frames(2)
+	_release(to_window * plane_start)
+	await _frames(110)
+	if plane.position.x < 1400.0:
+		_fail("飞机未飞到右边 x=" + str(plane.position.x))
+	else:
+		print("UI_PROBE: 飞机飞过去 OK")
+
+	# 再点 → 从右飞回左
+	_press(to_window * plane.position)
+	await _frames(2)
+	_release(to_window * plane.position)
+	await _frames(110)
+	if plane.position.x > 500.0:
+		_fail("飞机未飞回左边 x=" + str(plane.position.x))
+	else:
+		print("UI_PROBE: 飞机飞回来 OK")
+
+	# 拖小人上飞机
+	_press(to_window * ac.position)
+	await _frames(2)
+	_move(to_window * plane.hit_rect().get_center())
+	await _frames(2)
+	_release(to_window * plane.hit_rect().get_center())
+	await _frames(2)
+	if plane.get("passenger") == null:
+		_fail("小人未登机")
+	else:
+		print("UI_PROBE: 登机 OK")
+
 	print("UI_PROBE: " + ("PASS" if _ok else "FAIL"))
 	get_tree().quit(0 if _ok else 1)
 

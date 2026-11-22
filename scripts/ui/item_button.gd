@@ -39,5 +39,7 @@ func _draw() -> void:
 			Item.draw_icon_dish(self, _data)
 		"juice":
 			Item.draw_icon_juice(self, _data)
+		"burger":
+			Item.draw_icon_burger(self, _data)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	draw_string(ThemeDB.fallback_font, Vector2(0, size.y - 8), str(_data.get("name", item_id)), HORIZONTAL_ALIGNMENT_CENTER, size.x, 22, Color(0.364, 0.251, 0.157))

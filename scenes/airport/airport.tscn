@@ -1,0 +1,129 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/scenes/scene_base.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/items/prop_draw.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/items/item.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/items/airplane.gd" id="4"]
+
+[node name="Airport" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1")
+scene_id = "airport"
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.93, 0.95, 0.98, 1)
+
+[node name="Floor" type="ColorRect" parent="."]
+layout_mode = 1
+anchor_top = 0.62
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.82, 0.85, 0.9, 1)
+
+[node name="Decor" type="Node2D" parent="."]
+
+[node name="Window1" type="Node2D" parent="Decor"]
+position = Vector2(300, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Window2" type="Node2D" parent="Decor"]
+position = Vector2(960, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Window3" type="Node2D" parent="Decor"]
+position = Vector2(1620, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Sign" type="Node2D" parent="Decor"]
+position = Vector2(960, 330)
+script = ExtResource("2")
+prop_type = "sign"
+sign_text = "机场"
+
+[node name="Plant" type="Node2D" parent="Decor"]
+position = Vector2(1860, 940)
+script = ExtResource("2")
+prop_type = "plant"
+
+[node name="Items" type="Node2D" parent="."]
+
+[node name="Counter" type="Node2D" parent="Items"]
+position = Vector2(300, 800)
+script = ExtResource("3")
+item_id = "kitchen_counter"
+
+[node name="Chairs" type="Node2D" parent="Items"]
+position = Vector2(620, 860)
+script = ExtResource("3")
+item_id = "waiting_chairs"
+
+[node name="Characters" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Airplane" type="Node2D" parent="."]
+position = Vector2(260, 640)
+script = ExtResource("4")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 50.0
+offset_right = 400.0
+offset_bottom = 150.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.364, 0.251, 0.157, 1)
+theme_override_font_sizes/font_size = 72
+horizontal_alignment = 1
+text = "机场"
+
+[node name="HintLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -700.0
+offset_top = 170.0
+offset_right = 700.0
+offset_bottom = 250.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.553, 0.431, 0.388, 1)
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+text = "点飞机 → 飞过去 / 再点 → 飞回来 · 拖小人上飞机 · 拖汉堡/饮料给小人"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 192.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 44
+text = "地图"
