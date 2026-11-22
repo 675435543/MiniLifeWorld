@@ -65,10 +65,16 @@ func _draw() -> void:
 			_ball_pit()
 		"sign":
 			_sign()
+		"bigsign":
+			_bigsign()
 		"counter":
 			_counter()
 		"stove":
 			_stove()
+		"rack":
+			_rack()
+		"mirror":
+			_mirror()
 		"hospital_bed":
 			_hospital_bed()
 		"cabinet":
@@ -380,3 +386,32 @@ func _stove() -> void:
 	draw_circle(Vector2(32, -88), 12.0, Color(0.95, 0.6, 0.3))
 	draw_rect(Rect2(-46, -46, 92, 40), body.lightened(0.1))
 	draw_rect(Rect2(-38, -38, 76, 24), Color(0.15, 0.16, 0.18))
+
+
+func _bigsign() -> void:
+	var pillar := Color(0.85, 0.82, 0.78)
+	draw_rect(Rect2(-26, -360, 52, 360), pillar)
+	draw_rect(Rect2(-30, -372, 60, 14), pillar.darkened(0.1))
+	var wood := Color(0.62, 0.42, 0.28)
+	draw_rect(Rect2(-150, -350, 300, 96), wood)
+	draw_rect(Rect2(-140, -342, 280, 80), wood.lightened(0.12))
+	draw_string(ThemeDB.fallback_font, Vector2(-150, -278), sign_text, HORIZONTAL_ALIGNMENT_CENTER, 300, 68, Color(0.28, 0.2, 0.15))
+
+
+func _rack() -> void:
+	var bar := Color(0.6, 0.62, 0.66)
+	draw_rect(Rect2(-110, -170, 8, 170), bar)
+	draw_rect(Rect2(102, -170, 8, 170), bar)
+	draw_rect(Rect2(-118, -178, 236, 10), bar)
+	var cols := [Color(0.65, 0.85, 0.65), Color(1.0, 0.88, 0.5), Color(1.0, 0.72, 0.3), Color(0.42, 0.45, 0.75)]
+	for i in range(4):
+		var x := -84.0 + i * 56.0
+		draw_rect(Rect2(x, -160, 40, 60), cols[i])
+		draw_rect(Rect2(x - 6, -160, 12, 24), cols[i].darkened(0.1))
+		draw_rect(Rect2(x + 34, -160, 12, 24), cols[i].darkened(0.1))
+
+
+func _mirror() -> void:
+	draw_rect(Rect2(-50, -180, 100, 180), Color(0.9, 0.9, 0.95))
+	draw_rect(Rect2(-42, -172, 84, 164), Color(0.75, 0.86, 0.95))
+	draw_line(Vector2(-30, -160), Vector2(-6, -120), Color(1, 1, 1, 0.6), 4.0)

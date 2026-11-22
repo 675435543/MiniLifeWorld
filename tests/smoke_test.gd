@@ -52,6 +52,7 @@ func _check_scenes() -> bool:
 		"res://scenes/playground/playground.tscn",
 		"res://scenes/restaurant/restaurant.tscn",
 		"res://scenes/airport/airport.tscn",
+		"res://scenes/shop/shop.tscn",
 		"res://scenes/characters/character.tscn",
 	]
 	var ok := true

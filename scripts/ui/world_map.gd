@@ -8,6 +8,7 @@ const BUILDINGS := [
 	["Center/HBox/PlaygroundBtn", "playground"],
 	["Center/HBox/RestaurantBtn", "restaurant"],
 	["Center/HBox/AirportBtn", "airport"],
+	["Center/HBox/ShopBtn", "shop"],
 ]
 
 

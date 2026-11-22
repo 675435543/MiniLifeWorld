@@ -21,6 +21,9 @@ var _blink_left := 0.0
 var _hop := 0.0
 var _hold_timer := 0.0
 var _shirt_override := Color(0, 0, 0, 0)
+var _skirt_override := Color(0, 0, 0, 0)
+var _scarf_override := Color(0, 0, 0, 0)
+var _gloves_override := Color(0, 0, 0, 0)
 
 
 func _ready() -> void:
@@ -52,6 +55,33 @@ func shirt_color() -> Color:
 	if _shirt_override.a > 0.0:
 		return _shirt_override
 	return Color(str(palette.get("shirt", "#FF8A65")))
+
+
+func skirt_color() -> Color:
+	return _skirt_override
+
+
+func scarf_color() -> Color:
+	return _scarf_override
+
+
+func gloves_color() -> Color:
+	return _gloves_override
+
+
+func apply_skirt(color: Color) -> void:
+	_skirt_override = color
+	queue_redraw()
+
+
+func apply_scarf(color: Color) -> void:
+	_scarf_override = color
+	queue_redraw()
+
+
+func apply_gloves(color: Color) -> void:
+	_gloves_override = color
+	queue_redraw()
 
 
 func begin_drag() -> void:
@@ -123,9 +153,23 @@ func _draw() -> void:
 		draw_rect(Rect2(3, -36, 14, 36), pants)
 
 	var torso_y := -66.0 if sit else -80.0
+	if _skirt_override.a > 0.0:
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(-30.0, torso_y + 34.0),
+			Vector2(30.0, torso_y + 34.0),
+			Vector2(44.0, torso_y + 66.0),
+			Vector2(-44.0, torso_y + 66.0),
+		]), _skirt_override)
 	draw_rect(Rect2(-24, torso_y, 48, 50), shirt)
 	draw_line(Vector2(-24, torso_y + 12), Vector2(-36, torso_y + 40), skin, 9.0)
 	draw_line(Vector2(24, torso_y + 12), Vector2(36, torso_y + 40), skin, 9.0)
+
+	if _scarf_override.a > 0.0:
+		draw_rect(Rect2(-20, torso_y - 2, 40, 10), _scarf_override)
+		draw_rect(Rect2(-8, torso_y + 8, 12, 22), _scarf_override.darkened(0.1))
+	if _gloves_override.a > 0.0:
+		draw_circle(Vector2(-37, torso_y + 42), 6.0, _gloves_override)
+		draw_circle(Vector2(37, torso_y + 42), 6.0, _gloves_override)
 
 	var head_y := torso_y - 26.0
 	draw_circle(Vector2(0, head_y - 6), 29.0, hair)

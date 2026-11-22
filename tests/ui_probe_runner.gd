@@ -399,6 +399,75 @@ func _run() -> void:
 	else:
 		print("UI_PROBE: 登机 OK")
 
+	# ---- 卖衣服店 ----
+	air.queue_free()
+	await _frames(2)
+	var shop: Control = load("res://scenes/shop/shop.tscn").instantiate()
+	add_child(shop)
+	await _frames(2)
+	var shchars: Node = shop.get_node("Characters")
+	var shc: Node2D = shchars.get_child(0)
+	var fit1: Node2D = shop.get_node("Items/Fitting1")
+	_press(to_window * shc.position)
+	await _frames(2)
+	_move(to_window * fit1.zone_rect().get_center())
+	await _frames(2)
+	_release(to_window * fit1.zone_rect().get_center())
+	await _frames(2)
+	if shc.state != ST_HAPPY:
+		_fail("换衣室未触发 state=" + str(shc.state))
+	else:
+		print("UI_PROBE: 换衣室 OK")
+
+	var shbar: Node = shop.get_node("ItemBar")
+	var skirt_btn: Control = shbar.get_child(4)
+	_press(to_window * skirt_btn.get_global_rect().get_center())
+	await _frames(2)
+	_move(to_window * (shc.position + Vector2(0, -10)))
+	await _frames(2)
+	_release(to_window * (shc.position + Vector2(0, -10)))
+	await _frames(2)
+	if shc.skirt_color().a <= 0.0:
+		_fail("小裙子未穿上")
+	else:
+		print("UI_PROBE: 穿小裙子 OK")
+
+	var scarf_btn: Control = shbar.get_child(5)
+	_press(to_window * scarf_btn.get_global_rect().get_center())
+	await _frames(2)
+	_move(to_window * (shc.position + Vector2(0, -10)))
+	await _frames(2)
+	_release(to_window * (shc.position + Vector2(0, -10)))
+	await _frames(2)
+	if shc.scarf_color().a <= 0.0:
+		_fail("围巾未戴上")
+	else:
+		print("UI_PROBE: 戴围巾 OK")
+
+	var gloves_btn: Control = shbar.get_child(6)
+	_press(to_window * gloves_btn.get_global_rect().get_center())
+	await _frames(2)
+	_move(to_window * (shc.position + Vector2(0, -10)))
+	await _frames(2)
+	_release(to_window * (shc.position + Vector2(0, -10)))
+	await _frames(2)
+	if shc.gloves_color().a <= 0.0:
+		_fail("手套未戴上")
+	else:
+		print("UI_PROBE: 戴手套 OK")
+
+	var winter_btn: Control = shbar.get_child(3)
+	_press(to_window * winter_btn.get_global_rect().get_center())
+	await _frames(2)
+	_move(to_window * (shc.position + Vector2(0, -10)))
+	await _frames(2)
+	_release(to_window * (shc.position + Vector2(0, -10)))
+	await _frames(2)
+	if shc.shirt_color().to_html(false) != "5c6bc0":
+		_fail("棉袄未穿上 shirt=" + str(shc.shirt_color().to_html(false)))
+	else:
+		print("UI_PROBE: 穿棉袄 OK")
+
 	print("UI_PROBE: " + ("PASS" if _ok else "FAIL"))
 	get_tree().quit(0 if _ok else 1)
 

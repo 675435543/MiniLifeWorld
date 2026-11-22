@@ -18,7 +18,8 @@ func _ready() -> void:
 
 func _draw() -> void:
 	draw_set_transform(Vector2(size.x * 0.5, size.y * 0.62), 0.0, Vector2(1.3, 1.3))
-	match item_id:
+	var pt := str(_data.get("prop_type", item_id))
+	match pt:
 		"food":
 			Item.draw_icon_food(self, _data)
 		"water_cup":
@@ -41,5 +42,11 @@ func _draw() -> void:
 			Item.draw_icon_juice(self, _data)
 		"burger":
 			Item.draw_icon_burger(self, _data)
+		"skirt":
+			Item.draw_icon_skirt(self, _data)
+		"scarf":
+			Item.draw_icon_scarf(self, _data)
+		"gloves":
+			Item.draw_icon_gloves(self, _data)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	draw_string(ThemeDB.fallback_font, Vector2(0, size.y - 8), str(_data.get("name", item_id)), HORIZONTAL_ALIGNMENT_CENTER, size.x, 22, Color(0.364, 0.251, 0.157))

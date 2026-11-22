@@ -25,7 +25,7 @@ func _run() -> void:
 	else:
 		print("NAV: 进入世界地图 OK")
 
-	for pair in [["HomeBtn", "Home"], ["HospitalBtn", "Hospital"], ["SchoolBtn", "School"], ["PlaygroundBtn", "Playground"], ["RestaurantBtn", "Restaurant"], ["AirportBtn", "Airport"]]:
+	for pair in [["HomeBtn", "Home"], ["HospitalBtn", "Hospital"], ["SchoolBtn", "School"], ["PlaygroundBtn", "Playground"], ["RestaurantBtn", "Restaurant"], ["AirportBtn", "Airport"], ["ShopBtn", "Shop"]]:
 		var map := get_tree().current_scene
 		var btn := map.get_node_or_null("Center/HBox/" + str(pair[0])) as Button
 		if btn == null:

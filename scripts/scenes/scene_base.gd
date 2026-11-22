@@ -50,6 +50,12 @@ func _restore_or_spawn(info: Dictionary) -> void:
 			var outfit := str(e.get("outfit", ""))
 			if not outfit.is_empty():
 				c.apply_outfit(Color("#" + outfit))
+			if e.has("skirt"):
+				c.apply_skirt(Color("#" + str(e["skirt"])))
+			if e.has("scarf"):
+				c.apply_scarf(Color("#" + str(e["scarf"])))
+			if e.has("gloves"):
+				c.apply_gloves(Color("#" + str(e["gloves"])))
 		return
 	spawn_character(str(info.get("default_character", "mom")))
 
@@ -63,11 +69,18 @@ func _save_scene_state() -> void:
 		var ch := child as Character
 		if ch == null:
 			continue
-		list.append({
+		var entry: Dictionary = {
 			"id": ch.char_id,
 			"pos": [ch.position.x, ch.position.y],
 			"outfit": ch.shirt_color().to_html(false),
-		})
+		}
+		if ch.skirt_color().a > 0.0:
+			entry["skirt"] = ch.skirt_color().to_html(false)
+		if ch.scarf_color().a > 0.0:
+			entry["scarf"] = ch.scarf_color().to_html(false)
+		if ch.gloves_color().a > 0.0:
+			entry["gloves"] = ch.gloves_color().to_html(false)
+		list.append(entry)
 	SaveManager.set_scene_state(scene_id, {"characters": list})
 	SaveManager.save_game()
 
@@ -98,16 +111,22 @@ func _build_avatar_bar() -> void:
 func _build_item_bar() -> void:
 	var info: Dictionary = GameData.scenes.get(scene_id, {})
 	var bar_items: Array = info.get("bar_items", ITEM_BAR)
-	var bar := HBoxContainer.new()
+	var cols: int = clamp(mini(4, bar_items.size()), 1, 4)
+	var rows: int = int(ceil(bar_items.size() / float(cols)))
+	var bar := GridContainer.new()
 	bar.name = "ItemBar"
-	bar.add_theme_constant_override("separation", 14)
+	bar.columns = cols
+	bar.add_theme_constant_override("h_separation", 14)
+	bar.add_theme_constant_override("v_separation", 14)
 	bar.mouse_filter = Control.MOUSE_FILTER_PASS
 	add_child(bar)
 	bar.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
 	bar.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	bar.offset_left = -416.0
+	var width_w := cols * 120.0 + (cols - 1) * 14.0
+	var height_h := rows * 150.0 + (rows - 1) * 14.0 + 28.0
+	bar.offset_left = -(width_w + 28.0)
 	bar.offset_right = -28.0
-	bar.offset_top = -206.0
+	bar.offset_top = -height_h
 	bar.offset_bottom = -28.0
 	for id in bar_items:
 		var btn := ItemButton.new()

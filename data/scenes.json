@@ -40,5 +40,12 @@
 		"building_color": "#90CAF9",
 		"default_character": "dad",
 		"bar_items": ["burger", "juice"]
+	},
+	"shop": {
+		"name": "卖衣服",
+		"path": "res://scenes/shop/shop.tscn",
+		"building_color": "#F48FB1",
+		"default_character": "sister",
+		"bar_items": ["clothes_spring", "clothes_summer", "clothes_autumn", "clothes_winter", "skirt", "scarf", "gloves"]
 	}
 }

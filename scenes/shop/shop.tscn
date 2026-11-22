@@ -1,0 +1,139 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/scenes/scene_base.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/items/prop_draw.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/items/item.gd" id="3"]
+
+[node name="Shop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1")
+scene_id = "shop"
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.97, 0.93, 0.9, 1)
+
+[node name="Floor" type="ColorRect" parent="."]
+layout_mode = 1
+anchor_top = 0.62
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.85, 0.78, 0.68, 1)
+
+[node name="Decor" type="Node2D" parent="."]
+
+[node name="BigSign" type="Node2D" parent="Decor"]
+position = Vector2(960, 640)
+script = ExtResource("2")
+prop_type = "bigsign"
+sign_text = "卖衣服"
+
+[node name="Window1" type="Node2D" parent="Decor"]
+position = Vector2(280, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Window2" type="Node2D" parent="Decor"]
+position = Vector2(1660, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Rack1" type="Node2D" parent="Decor"]
+position = Vector2(420, 880)
+script = ExtResource("2")
+prop_type = "rack"
+
+[node name="Rack2" type="Node2D" parent="Decor"]
+position = Vector2(780, 880)
+script = ExtResource("2")
+prop_type = "rack"
+
+[node name="Mirror" type="Node2D" parent="Decor"]
+position = Vector2(1290, 850)
+script = ExtResource("2")
+prop_type = "mirror"
+
+[node name="Plant" type="Node2D" parent="Decor"]
+position = Vector2(1870, 940)
+script = ExtResource("2")
+prop_type = "plant"
+
+[node name="Items" type="Node2D" parent="."]
+
+[node name="ShopCounter" type="Node2D" parent="Items"]
+position = Vector2(1100, 800)
+script = ExtResource("3")
+item_id = "kitchen_counter"
+
+[node name="Fitting1" type="Node2D" parent="Items"]
+position = Vector2(1600, 800)
+script = ExtResource("3")
+item_id = "fitting_room"
+
+[node name="Fitting2" type="Node2D" parent="Items"]
+position = Vector2(1780, 800)
+script = ExtResource("3")
+item_id = "fitting_room"
+
+[node name="Characters" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 50.0
+offset_right = 400.0
+offset_bottom = 150.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.364, 0.251, 0.157, 1)
+theme_override_font_sizes/font_size = 72
+horizontal_alignment = 1
+text = "卖衣服"
+
+[node name="HintLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -700.0
+offset_top = 170.0
+offset_right = 700.0
+offset_bottom = 250.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.553, 0.431, 0.388, 1)
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+text = "拖春装/夏装/秋装/棉袄/裙子/围巾/手套到小人身上 · 拖小人到换衣室"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 192.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 44
+text = "地图"

@@ -55,6 +55,12 @@ func _draw() -> void:
 			draw_icon_juice(self, data)
 		"burger":
 			draw_icon_burger(self, data)
+		"skirt":
+			draw_icon_skirt(self, data)
+		"scarf":
+			draw_icon_scarf(self, data)
+		"gloves":
+			draw_icon_gloves(self, data)
 		_:
 			super._draw()
 
@@ -167,6 +173,32 @@ static func draw_icon_burger(ci: CanvasItem, info: Dictionary) -> void:
 	# 下层面包
 	ci.draw_rect(Rect2(-22, -6, 44, 10), Color(0.9, 0.72, 0.42))
 	ci.draw_circle(Vector2(0, 4), 22.0, Color(0.9, 0.72, 0.42))
+
+
+static func draw_icon_skirt(ci: CanvasItem, info: Dictionary) -> void:
+	var shirt := Color(str(info.get("shirt", "#F48FB1")))
+	var sk := Color(str(info.get("skirt", "#F06292")))
+	_draw_icon_shadow(ci)
+	ci.draw_rect(Rect2(-16, -36, 32, 18), shirt)
+	ci.draw_rect(Rect2(-26, -36, 10, 10), shirt)
+	ci.draw_rect(Rect2(16, -36, 10, 10), shirt)
+	ci.draw_colored_polygon(PackedVector2Array([Vector2(-20, -18), Vector2(20, -18), Vector2(30, 10), Vector2(-30, 10)]), sk)
+
+
+static func draw_icon_scarf(ci: CanvasItem, info: Dictionary) -> void:
+	var sc := Color(str(info.get("scarf", "#EF5350")))
+	_draw_icon_shadow(ci)
+	ci.draw_rect(Rect2(-30, -10, 60, 14), sc)
+	ci.draw_rect(Rect2(-10, 4, 18, 26), sc.darkened(0.1))
+
+
+static func draw_icon_gloves(ci: CanvasItem, info: Dictionary) -> void:
+	var gl := Color(str(info.get("gloves", "#26A69A")))
+	_draw_icon_shadow(ci)
+	for x in [-16.0, 16.0]:
+		ci.draw_rect(Rect2(x - 10, -26, 20, 26), gl)
+		ci.draw_rect(Rect2(x - 10, -30, 20, 8), gl.lightened(0.15))
+		ci.draw_rect(Rect2(x + 8, -16, 8, 12), gl.darkened(0.1))
 
 
 static func _draw_icon_shadow(ci: CanvasItem) -> void:

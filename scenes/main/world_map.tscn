@@ -59,41 +59,47 @@ mouse_filter = 2
 
 [node name="HBox" type="HBoxContainer" parent="Center"]
 layout_mode = 2
-theme_override_constants/separation = 36
+theme_override_constants/separation = 24
 alignment = 1
 
 [node name="HomeBtn" type="Button" parent="Center/HBox"]
-custom_minimum_size = Vector2(280, 260)
+custom_minimum_size = Vector2(250, 240)
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 44
 text = "家"
 
 [node name="HospitalBtn" type="Button" parent="Center/HBox"]
-custom_minimum_size = Vector2(280, 260)
+custom_minimum_size = Vector2(250, 240)
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 44
 text = "医院"
 
 [node name="SchoolBtn" type="Button" parent="Center/HBox"]
-custom_minimum_size = Vector2(280, 260)
+custom_minimum_size = Vector2(250, 240)
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 44
 text = "学校"
 
 [node name="PlaygroundBtn" type="Button" parent="Center/HBox"]
-custom_minimum_size = Vector2(280, 260)
+custom_minimum_size = Vector2(250, 240)
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 44
 text = "游乐场"
 
 [node name="RestaurantBtn" type="Button" parent="Center/HBox"]
-custom_minimum_size = Vector2(280, 260)
+custom_minimum_size = Vector2(250, 240)
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 44
 text = "餐厅"
 
 [node name="AirportBtn" type="Button" parent="Center/HBox"]
-custom_minimum_size = Vector2(280, 260)
+custom_minimum_size = Vector2(250, 240)
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 44
 text = "机场"
+
+[node name="ShopBtn" type="Button" parent="Center/HBox"]
+custom_minimum_size = Vector2(250, 240)
+layout_mode = 2
+theme_override_font_sizes/font_size = 44
+text = "卖衣服"

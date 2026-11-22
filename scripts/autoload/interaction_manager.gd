@@ -69,7 +69,15 @@ func try_character_item(c: Character, item: Item) -> bool:
 			c.set_state(Character.State.EAT)
 			return true
 		"wear":
-			c.apply_outfit(Color(str(item.data.get("shirt", "#FF8A65"))))
+			var d := item.data
+			if d.has("shirt"):
+				c.apply_outfit(Color(str(d["shirt"])))
+			if d.has("skirt"):
+				c.apply_skirt(Color(str(d["skirt"])))
+			if d.has("scarf"):
+				c.apply_scarf(Color(str(d["scarf"])))
+			if d.has("gloves"):
+				c.apply_gloves(Color(str(d["gloves"])))
 			c.set_state(Character.State.HAPPY)
 			return true
 		"play":
