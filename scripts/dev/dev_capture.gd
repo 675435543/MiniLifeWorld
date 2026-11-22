@@ -37,11 +37,25 @@ func _run_capture() -> void:
 		tree.root.add_child(inst)
 		tree.current_scene = inst
 		await _capture_current(c[0])
+		if c[0] == "03_home":
+			_log_layout(inst)
 		inst.visible = false
 		inst.queue_free()
 		await tree.process_frame
 
 	get_tree().quit()
+
+
+func _log_layout(room: Node) -> void:
+	var bar := room.get_node_or_null("AvatarBar")
+	if bar:
+		print("DEV_LAYOUT: AvatarBar pos=", bar.position, " size=", bar.size)
+		for child in bar.get_children():
+			print("DEV_LAYOUT: avatar id=", child.get("char_id"), " pos=", child.position, " size=", child.size)
+	var chars := room.get_node_or_null("Characters")
+	if chars:
+		for c in chars.get_children():
+			print("DEV_LAYOUT: character id=", c.get("char_id"), " pos=", c.position)
 
 
 func _capture_current(shot_name: String) -> void:

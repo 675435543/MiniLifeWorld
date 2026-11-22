@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/scenes/scene_base.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/items/prop_draw.gd" id="2"]
 
 [node name="Hospital" type="Control"]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1")
 scene_id = "hospital"
 
@@ -19,6 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.89, 0.949, 0.992, 1)
 
 [node name="Floor" type="ColorRect" parent="."]
@@ -32,7 +35,38 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.82, 0.89, 0.96, 1)
+
+[node name="Decor" type="Node2D" parent="."]
+
+[node name="Reception" type="Node2D" parent="Decor"]
+position = Vector2(500, 830)
+script = ExtResource("2")
+prop_type = "desk"
+
+[node name="Chairs" type="Node2D" parent="Decor"]
+position = Vector2(830, 870)
+script = ExtResource("2")
+prop_type = "chairs"
+
+[node name="HospitalBed" type="Node2D" parent="Decor"]
+position = Vector2(1250, 850)
+script = ExtResource("2")
+prop_type = "hospital_bed"
+
+[node name="Cabinet" type="Node2D" parent="Decor"]
+position = Vector2(1650, 810)
+script = ExtResource("2")
+prop_type = "cabinet"
+
+[node name="Plant" type="Node2D" parent="Decor"]
+position = Vector2(1850, 930)
+script = ExtResource("2")
+prop_type = "plant"
+
+[node name="Characters" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="TitleLabel" type="Label" parent="."]
 layout_mode = 1
@@ -44,6 +78,7 @@ offset_top = 50.0
 offset_right = 400.0
 offset_bottom = 150.0
 grow_horizontal = 2
+mouse_filter = 2
 theme_override_colors/font_color = Color(0.364, 0.251, 0.157, 1)
 theme_override_font_sizes/font_size = 72
 horizontal_alignment = 1
@@ -51,21 +86,19 @@ text = "医院"
 
 [node name="HintLabel" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-anchor_top = 1.0
-anchor_bottom = 1.0
 offset_left = -700.0
-offset_top = -140.0
+offset_top = 170.0
 offset_right = 700.0
-offset_bottom = -60.0
+offset_bottom = 250.0
 grow_horizontal = 2
-grow_vertical = 0
+mouse_filter = 2
 theme_override_colors/font_color = Color(0.553, 0.431, 0.388, 1)
 theme_override_font_sizes/font_size = 36
 horizontal_alignment = 1
-text = "药房、诊疗床、听诊器将在 M3 加入"
+text = "点左下角头像 → 拖动小人 → 双击小人换动作"
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 0

@@ -8,8 +8,22 @@ func _initialize() -> void:
 	var ok := true
 	ok = _check_data() and ok
 	ok = _check_scenes() and ok
+	ok = _check_scripts() and ok
 	print("SMOKE_TEST: " + ("PASS" if ok else "FAIL"))
 	quit(0 if ok else 1)
+
+
+func _check_scripts() -> bool:
+	var ok := true
+	for s in [
+		"res://scripts/characters/character.gd",
+		"res://scripts/ui/avatar_button.gd",
+		"res://scripts/items/prop_draw.gd",
+	]:
+		if load(s) == null:
+			push_error("脚本加载失败: " + str(s))
+			ok = false
+	return ok
 
 
 func _check_data() -> bool:
@@ -34,6 +48,7 @@ func _check_scenes() -> bool:
 		"res://scenes/home/home.tscn",
 		"res://scenes/hospital/hospital.tscn",
 		"res://scenes/school/school.tscn",
+		"res://scenes/characters/character.tscn",
 	]
 	var ok := true
 	for p in paths:
