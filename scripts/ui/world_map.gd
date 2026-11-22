@@ -5,6 +5,7 @@ const BUILDINGS := [
 	["Center/HBox/HomeBtn", "home"],
 	["Center/HBox/HospitalBtn", "hospital"],
 	["Center/HBox/SchoolBtn", "school"],
+	["Center/HBox/PlaygroundBtn", "playground"],
 ]
 
 

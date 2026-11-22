@@ -11,7 +11,8 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	_draw_shadow()
+	if prop_type != "cloud" and prop_type != "sun":
+		_draw_shadow()
 	match prop_type:
 		"sofa":
 			_sofa()
@@ -45,6 +46,20 @@ func _draw() -> void:
 			_bookshelf()
 		"curtain":
 			_curtain()
+		"cloud":
+			_cloud()
+		"tree":
+			_tree()
+		"sun":
+			_sun()
+		"slide":
+			_slide()
+		"seesaw":
+			_seesaw()
+		"swing":
+			_swing()
+		"ball_pit":
+			_ball_pit()
 		"hospital_bed":
 			_hospital_bed()
 		"cabinet":
@@ -254,3 +269,69 @@ func _hoop() -> void:
 	draw_arc(Vector2(0, -178), 30.0, 0.0, TAU, 16, Color(0.85, 0.45, 0.25), 5.0)
 	for i in range(5):
 		draw_line(Vector2(-24 + i * 12, -170), Vector2(-6 + i * 3, -150), Color(0.9, 0.9, 0.92), 1.5)
+
+
+func _cloud() -> void:
+	var c := Color(1, 1, 1, 0.92)
+	draw_circle(Vector2(-40, 0), 26.0, c)
+	draw_circle(Vector2(0, -14), 34.0, c)
+	draw_circle(Vector2(44, 0), 24.0, c)
+	draw_rect(Rect2(-66, -8, 132, 22), c)
+
+
+func _tree() -> void:
+	draw_rect(Rect2(-14, -60, 28, 60), Color(0.55, 0.4, 0.28))
+	draw_circle(Vector2(0, -110), 46.0, Color(0.35, 0.62, 0.35))
+	draw_circle(Vector2(-34, -84), 30.0, Color(0.42, 0.7, 0.4))
+	draw_circle(Vector2(34, -84), 30.0, Color(0.42, 0.7, 0.4))
+
+
+func _sun() -> void:
+	draw_circle(Vector2.ZERO, 36.0, Color(1.0, 0.85, 0.3))
+	for i in range(8):
+		var a := deg_to_rad(i * 45.0)
+		draw_line(Vector2(cos(a), sin(a)) * 46.0, Vector2(cos(a), sin(a)) * 58.0, Color(1.0, 0.85, 0.3), 5.0)
+
+
+func _slide() -> void:
+	var blue := Color(0.42, 0.65, 0.9)
+	var slide_col := Color(0.95, 0.55, 0.3)
+	draw_rect(Rect2(60, -200, 16, 200), blue.darkened(0.2))
+	draw_rect(Rect2(150, -200, 16, 200), blue.darkened(0.2))
+	draw_rect(Rect2(56, -208, 118, 12), blue)
+	for i in range(4):
+		draw_line(Vector2(76 + i * 22, -40 - i * 40), Vector2(96 + i * 22, -40 - i * 40), blue, 5.0)
+	draw_colored_polygon(PackedVector2Array([Vector2(60, -196), Vector2(-120, -46), Vector2(-90, -20), Vector2(100, -196)]), slide_col)
+	draw_line(Vector2(60, -204), Vector2(-124, -54), slide_col.darkened(0.15), 8.0)
+	draw_line(Vector2(100, -204), Vector2(-84, -28), slide_col.darkened(0.15), 8.0)
+
+
+func _seesaw() -> void:
+	var pivot := Color(0.6, 0.45, 0.3)
+	var plank := Color(0.85, 0.6, 0.4)
+	draw_colored_polygon(PackedVector2Array([Vector2(-18, 0), Vector2(18, 0), Vector2(0, -34)]), pivot)
+	draw_set_transform(Vector2(0, -30), 0.0, Vector2.ONE)
+	draw_rect(Rect2(-120, -8, 240, 14), plank)
+	draw_rect(Rect2(-124, -12, 18, 20), plank.darkened(0.15))
+	draw_rect(Rect2(106, -12, 18, 20), plank.darkened(0.15))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+
+func _swing() -> void:
+	var frame := Color(0.55, 0.6, 0.7)
+	draw_rect(Rect2(-90, -210, 12, 210), frame)
+	draw_rect(Rect2(78, -210, 12, 210), frame)
+	draw_rect(Rect2(-94, -226, 188, 18), frame.darkened(0.1))
+	draw_line(Vector2(-30, -208), Vector2(-30, -60), Color(0.5, 0.4, 0.3), 4.0)
+	draw_line(Vector2(30, -208), Vector2(30, -60), Color(0.5, 0.4, 0.3), 4.0)
+	draw_rect(Rect2(-44, -64, 88, 12), Color(0.9, 0.55, 0.35))
+
+
+func _ball_pit() -> void:
+	var wall := Color(0.45, 0.75, 0.85)
+	draw_rect(Rect2(-150, -50, 300, 50), wall.darkened(0.15))
+	draw_rect(Rect2(-140, -44, 280, 36), wall.lightened(0.2))
+	var ball_colors := [Color(0.95, 0.4, 0.4), Color(0.95, 0.75, 0.3), Color(0.45, 0.8, 0.5), Color(0.5, 0.6, 0.95), Color(0.9, 0.5, 0.8)]
+	var pts := [Vector2(-110, -36), Vector2(-60, -30), Vector2(-10, -38), Vector2(40, -32), Vector2(90, -36), Vector2(130, -30), Vector2(-85, -46), Vector2(5, -44), Vector2(70, -46)]
+	for i in range(pts.size()):
+		draw_circle(pts[i] + Vector2(0, -6), 13.0, ball_colors[i % 5])

@@ -1,0 +1,133 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/scenes/scene_base.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/items/prop_draw.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/items/item.gd" id="3"]
+
+[node name="Playground" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1")
+scene_id = "playground"
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.733, 0.871, 0.984, 1)
+
+[node name="Floor" type="ColorRect" parent="."]
+layout_mode = 1
+anchor_top = 0.62
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.65, 0.82, 0.5, 1)
+
+[node name="Decor" type="Node2D" parent="."]
+
+[node name="Sun" type="Node2D" parent="Decor"]
+position = Vector2(1750, 210)
+script = ExtResource("2")
+prop_type = "sun"
+
+[node name="Cloud1" type="Node2D" parent="Decor"]
+position = Vector2(320, 230)
+script = ExtResource("2")
+prop_type = "cloud"
+
+[node name="Cloud2" type="Node2D" parent="Decor"]
+position = Vector2(1050, 160)
+script = ExtResource("2")
+prop_type = "cloud"
+
+[node name="Tree1" type="Node2D" parent="Decor"]
+position = Vector2(120, 780)
+script = ExtResource("2")
+prop_type = "tree"
+
+[node name="Tree2" type="Node2D" parent="Decor"]
+position = Vector2(1840, 760)
+script = ExtResource("2")
+prop_type = "tree"
+
+[node name="Items" type="Node2D" parent="."]
+
+[node name="Seesaw" type="Node2D" parent="Items"]
+position = Vector2(400, 860)
+script = ExtResource("3")
+item_id = "seesaw"
+
+[node name="Swing" type="Node2D" parent="Items"]
+position = Vector2(900, 860)
+script = ExtResource("3")
+item_id = "swing"
+
+[node name="Slide" type="Node2D" parent="Items"]
+position = Vector2(1300, 860)
+script = ExtResource("3")
+item_id = "slide"
+
+[node name="BallPit" type="Node2D" parent="Items"]
+position = Vector2(1700, 830)
+script = ExtResource("3")
+item_id = "ball_pit"
+
+[node name="Characters" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 50.0
+offset_right = 400.0
+offset_bottom = 150.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.364, 0.251, 0.157, 1)
+theme_override_font_sizes/font_size = 72
+horizontal_alignment = 1
+text = "游乐场"
+
+[node name="HintLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -700.0
+offset_top = 170.0
+offset_right = 700.0
+offset_bottom = 250.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.553, 0.431, 0.388, 1)
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+text = "拖小人到滑梯/秋千/跷跷板/海洋球池"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 192.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 44
+text = "地图"

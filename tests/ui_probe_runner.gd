@@ -241,6 +241,63 @@ func _run() -> void:
 	else:
 		print("UI_PROBE: 玩球 OK")
 
+	# ---- 游乐场 ----
+	school.queue_free()
+	await _frames(2)
+	var pg: Control = load("res://scenes/playground/playground.tscn").instantiate()
+	add_child(pg)
+	await _frames(2)
+	var pchars: Node = pg.get_node("Characters")
+	var pc: Node2D = pchars.get_child(0)
+
+	var slide: Node2D = pg.get_node("Items/Slide")
+	_press(to_window * pc.position)
+	await _frames(2)
+	_move(to_window * slide.zone_rect().get_center())
+	await _frames(2)
+	_release(to_window * slide.zone_rect().get_center())
+	await _frames(40)
+	if pc.state != ST_HAPPY:
+		_fail("滑梯未触发 state=" + str(pc.state))
+	else:
+		print("UI_PROBE: 滑梯 OK")
+
+	var seesaw: Node2D = pg.get_node("Items/Seesaw")
+	_press(to_window * pc.position)
+	await _frames(2)
+	_move(to_window * seesaw.zone_rect().get_center())
+	await _frames(2)
+	_release(to_window * seesaw.zone_rect().get_center())
+	await _frames(2)
+	if pc.state != ST_SIT:
+		_fail("跷跷板未触发 state=" + str(pc.state))
+	else:
+		print("UI_PROBE: 跷跷板 OK")
+
+	var swing: Node2D = pg.get_node("Items/Swing")
+	_press(to_window * pc.position)
+	await _frames(2)
+	_move(to_window * swing.zone_rect().get_center())
+	await _frames(2)
+	_release(to_window * swing.zone_rect().get_center())
+	await _frames(2)
+	if pc.state != ST_SIT:
+		_fail("秋千未触发 state=" + str(pc.state))
+	else:
+		print("UI_PROBE: 秋千 OK")
+
+	var pit: Node2D = pg.get_node("Items/BallPit")
+	_press(to_window * pc.position)
+	await _frames(2)
+	_move(to_window * pit.zone_rect().get_center())
+	await _frames(2)
+	_release(to_window * pit.zone_rect().get_center())
+	await _frames(2)
+	if pc.state != ST_HAPPY:
+		_fail("海洋球池未触发 state=" + str(pc.state))
+	else:
+		print("UI_PROBE: 海洋球池 OK")
+
 	print("UI_PROBE: " + ("PASS" if _ok else "FAIL"))
 	get_tree().quit(0 if _ok else 1)
 

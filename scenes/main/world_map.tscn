@@ -79,3 +79,9 @@ custom_minimum_size = Vector2(380, 300)
 layout_mode = 2
 theme_override_font_sizes/font_size = 56
 text = "学校"
+
+[node name="PlaygroundBtn" type="Button" parent="Center/HBox"]
+custom_minimum_size = Vector2(380, 300)
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "游乐场"

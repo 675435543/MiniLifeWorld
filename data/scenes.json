@@ -19,5 +19,12 @@
 		"building_color": "#AED581",
 		"default_character": "teacher",
 		"bar_items": ["book", "pencil", "basketball"]
+	},
+	"playground": {
+		"name": "游乐场",
+		"path": "res://scenes/playground/playground.tscn",
+		"building_color": "#FFB74D",
+		"default_character": "brother",
+		"bar_items": ["basketball"]
 	}
 }
