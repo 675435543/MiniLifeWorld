@@ -4,7 +4,7 @@
 没有关卡、没有失败、没有倒计时——孩子在城市地图里选择建筑进入生活场景，拖动角色和道具，自由编自己的故事。
 
 - 引擎：Godot 4.x（GDScript / 2D）
-- 平台：Android 手机（横屏），开发版可在 PC 运行
+- 平台：Windows 电脑版（`启动游戏.cmd` 双击即玩）；Android APK 打包暂缓（导出模板需联网下载，当前不可用）
 - 设计文档：[docs/game-design.md](docs/game-design.md)
 
 ## 仓库状态
@@ -20,21 +20,24 @@
 | M4 | 学校场景完整可玩 | ✅ 已完成（2026-02-20，注入输入测试 PASS） |
 | M5 | 统一交互系统 + 存档 | ✅ 已完成（2026-02-20，注入输入测试 PASS） |
 | M6 | 触控优化 / 性能 / 横屏适配 | ✅ 已完成（2026-02-20，横屏+适配设置核验；场景丰富化：家三区/医院诊疗室/学校5课桌） |
-| M7 | Android APK 打包 | ⬜ 待办 |
+| M7 | Android APK 打包 | ⏸ 暂缓（导出模板下载失败）——已交付 Windows 电脑版：双击 `启动游戏.cmd` |
 
 ## 开发环境
 
 1. Godot 4.4+ Stable（含 Android 导出模板）
 2. JDK 17+、Android SDK（打包 APK 用，M7 再配置）
 
-## 运行
+## 运行（Windows 电脑版）
+
+- **双击项目根目录的 `启动游戏.cmd`** 即可开始玩（依赖已装好的 Godot 4.4.1：`F:\github\tools\`）
+- 或用命令行：
 
 ```bash
 # 用 Godot 打开项目
-godot project.godot
+"F:\github\tools\Godot_v4.4.1-stable_win64.exe" project.godot
 
-# 命令行运行（PC）
-godot --path . 
+# 直接运行
+"F:\github\tools\Godot_v4.4.1-stable_win64.exe" --path .
 ```
 
 ## 提醒
