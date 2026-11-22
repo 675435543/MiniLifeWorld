@@ -26,5 +26,12 @@
 		"building_color": "#FFB74D",
 		"default_character": "brother",
 		"bar_items": ["basketball"]
+	},
+	"restaurant": {
+		"name": "餐厅",
+		"path": "res://scenes/restaurant/restaurant.tscn",
+		"building_color": "#E57373",
+		"default_character": "dad",
+		"bar_items": ["dish", "juice"]
 	}
 }

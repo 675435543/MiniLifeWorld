@@ -35,6 +35,7 @@ func _run_capture() -> void:
 		["04_hospital", "res://scenes/hospital/hospital.tscn"],
 		["05_school", "res://scenes/school/school.tscn"],
 		["06_playground", "res://scenes/playground/playground.tscn"],
+		["07_restaurant", "res://scenes/restaurant/restaurant.tscn"],
 	]
 	for c in cases:
 		var ps := load(c[1]) as PackedScene

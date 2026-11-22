@@ -49,6 +49,10 @@ func _draw() -> void:
 			draw_icon_pencil(self, data)
 		"basketball":
 			draw_icon_ball(self, data)
+		"dish":
+			draw_icon_dish(self, data)
+		"juice":
+			draw_icon_juice(self, data)
 		_:
 			super._draw()
 
@@ -127,6 +131,24 @@ static func draw_icon_ball(ci: CanvasItem, info: Dictionary) -> void:
 	ci.draw_arc(Vector2(0, -20), 20.0, -0.9, 0.9, 12, Color(0.35, 0.2, 0.15), 2.0)
 	ci.draw_arc(Vector2(0, -20), 20.0, PI - 0.9, PI + 0.9, 12, Color(0.35, 0.2, 0.15), 2.0)
 	ci.draw_line(Vector2(-20, -20), Vector2(20, -20), Color(0.35, 0.2, 0.15), 2.0)
+
+
+static func draw_icon_dish(ci: CanvasItem, info: Dictionary) -> void:
+	var tint := Color(str(info.get("color", "#FF7043")))
+	_draw_icon_shadow(ci)
+	ci.draw_circle(Vector2(0, -16), 26.0, Color(0.97, 0.97, 1.0))
+	ci.draw_circle(Vector2(0, -16), 20.0, Color(0.9, 0.9, 0.95))
+	ci.draw_circle(Vector2(-6, -20), 9.0, Color(0.45, 0.7, 0.35))
+	ci.draw_circle(Vector2(8, -18), 8.0, tint)
+	ci.draw_circle(Vector2(2, -8), 6.0, Color(0.95, 0.8, 0.4))
+
+
+static func draw_icon_juice(ci: CanvasItem, info: Dictionary) -> void:
+	var tint := Color(str(info.get("color", "#FFB74D")))
+	_draw_icon_shadow(ci)
+	ci.draw_rect(Rect2(-14, -40, 28, 36), tint)
+	ci.draw_rect(Rect2(-16, -44, 32, 6), tint.lightened(0.2))
+	ci.draw_line(Vector2(6, -44), Vector2(14, -58), Color(0.9, 0.3, 0.3), 3.0)
 
 
 static func _draw_icon_shadow(ci: CanvasItem) -> void:

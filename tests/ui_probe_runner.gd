@@ -298,6 +298,51 @@ func _run() -> void:
 	else:
 		print("UI_PROBE: 海洋球池 OK")
 
+	# ---- 餐厅 ----
+	pg.queue_free()
+	await _frames(2)
+	var rest: Control = load("res://scenes/restaurant/restaurant.tscn").instantiate()
+	add_child(rest)
+	await _frames(2)
+	var rchars: Node = rest.get_node("Characters")
+	var rc: Node2D = rchars.get_child(0)
+	var chair1: Node2D = rest.get_node("Items/Chair1")
+	_press(to_window * rc.position)
+	await _frames(2)
+	_move(to_window * chair1.zone_rect().get_center())
+	await _frames(2)
+	_release(to_window * chair1.zone_rect().get_center())
+	await _frames(2)
+	if rc.state != ST_SIT:
+		_fail("餐厅椅子未坐下 state=" + str(rc.state))
+	else:
+		print("UI_PROBE: 餐厅坐下 OK")
+
+	var rbar: Node = rest.get_node("ItemBar")
+	var dish_btn: Control = rbar.get_child(0)
+	_press(to_window * dish_btn.get_global_rect().get_center())
+	await _frames(2)
+	_move(to_window * (rc.position + Vector2(0, -10)))
+	await _frames(2)
+	_release(to_window * (rc.position + Vector2(0, -10)))
+	await _frames(2)
+	if rc.state != ST_EAT:
+		_fail("餐厅菜未触发吃 state=" + str(rc.state))
+	else:
+		print("UI_PROBE: 餐厅上菜 OK")
+
+	var juice_btn: Control = rbar.get_child(1)
+	_press(to_window * juice_btn.get_global_rect().get_center())
+	await _frames(2)
+	_move(to_window * (rc.position + Vector2(0, -10)))
+	await _frames(2)
+	_release(to_window * (rc.position + Vector2(0, -10)))
+	await _frames(2)
+	if rc.state != ST_EAT:
+		_fail("饮料未触发喝 state=" + str(rc.state))
+	else:
+		print("UI_PROBE: 饮料 OK")
+
 	print("UI_PROBE: " + ("PASS" if _ok else "FAIL"))
 	get_tree().quit(0 if _ok else 1)
 

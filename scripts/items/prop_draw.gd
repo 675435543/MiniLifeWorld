@@ -60,6 +60,12 @@ func _draw() -> void:
 			_swing()
 		"ball_pit":
 			_ball_pit()
+		"sign":
+			_sign()
+		"counter":
+			_counter()
+		"stove":
+			_stove()
 		"hospital_bed":
 			_hospital_bed()
 		"cabinet":
@@ -335,3 +341,35 @@ func _ball_pit() -> void:
 	var pts := [Vector2(-110, -36), Vector2(-60, -30), Vector2(-10, -38), Vector2(40, -32), Vector2(90, -36), Vector2(130, -30), Vector2(-85, -46), Vector2(5, -44), Vector2(70, -46)]
 	for i in range(pts.size()):
 		draw_circle(pts[i] + Vector2(0, -6), 13.0, ball_colors[i % 5])
+
+
+func _sign() -> void:
+	var wood := Color(0.62, 0.42, 0.28)
+	draw_line(Vector2(-90, -180), Vector2(-90, -92), Color(0.35, 0.3, 0.25), 3.0)
+	draw_line(Vector2(90, -180), Vector2(90, -92), Color(0.35, 0.3, 0.25), 3.0)
+	draw_rect(Rect2(-130, -90, 260, 90), wood)
+	draw_rect(Rect2(-120, -82, 240, 74), wood.lightened(0.12))
+	draw_rect(Rect2(-130, -90, 260, 8), wood.darkened(0.15))
+	draw_string(ThemeDB.fallback_font, Vector2(-130, -20), "餐厅", HORIZONTAL_ALIGNMENT_CENTER, 260, 56, Color(0.28, 0.2, 0.15))
+
+
+func _counter() -> void:
+	var steel := Color(0.72, 0.76, 0.8)
+	draw_rect(Rect2(-130, -90, 260, 90), steel.darkened(0.12))
+	draw_rect(Rect2(-136, -96, 272, 12), steel.lightened(0.2))
+	draw_rect(Rect2(-40, -94, 56, 30), steel.darkened(0.3))
+	draw_arc(Vector2(18, -74), 26.0, -PI * 0.5, PI * 0.5, 12, steel.darkened(0.35), 4.0)
+	draw_circle(Vector2(-80, -60), 22.0, Color(0.3, 0.3, 0.33))
+	draw_circle(Vector2(-80, -60), 16.0, Color(0.45, 0.45, 0.5))
+
+
+func _stove() -> void:
+	var body := Color(0.4, 0.42, 0.45)
+	draw_rect(Rect2(-70, -90, 140, 90), body)
+	draw_rect(Rect2(-76, -96, 152, 14), body.lightened(0.25))
+	draw_circle(Vector2(-32, -88), 20.0, body.darkened(0.25))
+	draw_circle(Vector2(32, -88), 20.0, body.darkened(0.25))
+	draw_circle(Vector2(-32, -88), 12.0, Color(0.95, 0.6, 0.3))
+	draw_circle(Vector2(32, -88), 12.0, Color(0.95, 0.6, 0.3))
+	draw_rect(Rect2(-46, -46, 92, 40), body.lightened(0.1))
+	draw_rect(Rect2(-38, -38, 76, 24), Color(0.15, 0.16, 0.18))

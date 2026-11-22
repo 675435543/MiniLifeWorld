@@ -1,0 +1,158 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/scenes/scene_base.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/items/prop_draw.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/items/item.gd" id="3"]
+
+[node name="Restaurant" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1")
+scene_id = "restaurant"
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.98, 0.93, 0.86, 1)
+
+[node name="Floor" type="ColorRect" parent="."]
+layout_mode = 1
+anchor_top = 0.62
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.86, 0.7, 0.52, 1)
+
+[node name="Decor" type="Node2D" parent="."]
+
+[node name="Sign" type="Node2D" parent="Decor"]
+position = Vector2(960, 330)
+script = ExtResource("2")
+prop_type = "sign"
+
+[node name="Window1" type="Node2D" parent="Decor"]
+position = Vector2(430, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Window2" type="Node2D" parent="Decor"]
+position = Vector2(1480, 430)
+script = ExtResource("2")
+prop_type = "window"
+
+[node name="Divider" type="Node2D" parent="Decor"]
+position = Vector2(1120, 780)
+script = ExtResource("2")
+prop_type = "divider"
+
+[node name="Table1" type="Node2D" parent="Decor"]
+position = Vector2(420, 880)
+script = ExtResource("2")
+prop_type = "table"
+
+[node name="Table2" type="Node2D" parent="Decor"]
+position = Vector2(820, 880)
+script = ExtResource("2")
+prop_type = "table"
+
+[node name="Plant" type="Node2D" parent="Decor"]
+position = Vector2(1860, 940)
+script = ExtResource("2")
+prop_type = "plant"
+
+[node name="Items" type="Node2D" parent="."]
+
+[node name="Chair1" type="Node2D" parent="Items"]
+position = Vector2(300, 860)
+script = ExtResource("3")
+item_id = "chair"
+
+[node name="Chair2" type="Node2D" parent="Items"]
+position = Vector2(540, 860)
+script = ExtResource("3")
+item_id = "chair"
+
+[node name="Chair3" type="Node2D" parent="Items"]
+position = Vector2(700, 860)
+script = ExtResource("3")
+item_id = "chair"
+
+[node name="Chair4" type="Node2D" parent="Items"]
+position = Vector2(940, 860)
+script = ExtResource("3")
+item_id = "chair"
+
+[node name="KitchenCounter" type="Node2D" parent="Items"]
+position = Vector2(1450, 800)
+script = ExtResource("3")
+item_id = "kitchen_counter"
+
+[node name="Stove" type="Node2D" parent="Items"]
+position = Vector2(1650, 780)
+script = ExtResource("3")
+item_id = "stove"
+
+[node name="Fridge" type="Node2D" parent="Items"]
+position = Vector2(1810, 700)
+script = ExtResource("3")
+item_id = "fridge"
+
+[node name="Characters" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 50.0
+offset_right = 400.0
+offset_bottom = 150.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.364, 0.251, 0.157, 1)
+theme_override_font_sizes/font_size = 72
+horizontal_alignment = 1
+text = "餐厅"
+
+[node name="HintLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -700.0
+offset_top = 170.0
+offset_right = 700.0
+offset_bottom = 250.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.553, 0.431, 0.388, 1)
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+text = "拖小人到椅子上坐 · 拖菜/饮料给小人吃 · 后厨可互动"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 192.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 44
+text = "地图"
